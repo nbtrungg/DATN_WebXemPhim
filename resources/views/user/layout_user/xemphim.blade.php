@@ -7,12 +7,12 @@
     <div class="container">
        <figure class="movie-detail-banner">
           <img src="/assets/images/movie-4.png" alt="Free guy movie poster">
-          <button class="play-btn">
+          {{-- <button class="play-btn">
              <ion-icon name="play-circle-outline"></ion-icon>
-          </button>
+          </button> --}}
        </figure>
        <div class="movie-detail-content">
-          <p class="detail-subtitle">New Episodes</p>
+          <p class="detail-subtitle">Bạn Đang Xem: </p>
           <h1 class="h1 detail-title">
              Free <strong>Guy</strong>
           </h1>
@@ -43,24 +43,6 @@
              City that will
              soon go offline.
           </p>
-          <div class="details-actions">
-             <button class="share">
-                <ion-icon name="share-social"></ion-icon>
-                <span>Share</span>
-             </button>
-             <div class="title-wrapper">
-                <p class="title">Prime Video</p>
-                <p class="text">Streaming Channels</p>
-             </div>
-             <button class="btn btn-primary">
-                <ion-icon name="play"></ion-icon>
-                <span>Watch Now</span>
-             </button>
-          </div>
-          <a href="/assets/images/movie-4.png" download class="download-btn">
-             <span>Download</span>
-             <ion-icon name="download-outline"></ion-icon>
-          </a>
        </div>
     </div>
  </section>

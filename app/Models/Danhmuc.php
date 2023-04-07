@@ -9,4 +9,7 @@ class Danhmuc extends Model
 {
     public $timestamps=false;
     use HasFactory;
+    public function phim(){
+        return $this->hasMany(Phim::class);
+    }
 }

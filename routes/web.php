@@ -39,7 +39,7 @@ Route:: middleware(['auth'])->group(function(){
         Route::get('/danh-muc/{slug}',[IndexController::class,'danhmuc'])->name('danhmuc');
         Route::get('/the-loai/{slug}',[IndexController::class,'theloai'])->name('theloai');
         Route::get('/quoc-gia/{slug}',[IndexController::class,'quocgia'])->name('quocgia');
-        Route::get('/chi-tiet-phim',[IndexController::class,'chitietphim'])->name('chitietphim');
+        Route::get('/chi-tiet-phim/{slug}',[IndexController::class,'chitietphim'])->name('chitietphim');
         Route::get('/xem-phim',[IndexController::class,'xemphim'])->name('xemphim');
         Route::get('/tap-phim',[IndexController::class,'tapphim'])->name('tapphim');
     });

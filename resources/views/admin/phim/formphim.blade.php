@@ -119,7 +119,6 @@
                         <th scope="col">Hình Ảnh</th>
                         <th scope="col">Tiêu Đề</th>
                         <th scope="col">Slug</th>
-                        <th scope="col">Mô Tả</th>
                         <th scope="col">Danh Mục</th>
                         <th scope="col">Thể Loại</th>
                         <th scope="col">Quốc Gia</th>
@@ -135,7 +134,6 @@
                         <td><img style="width: 60px" src="{{asset('uploads/anhphim/'.$item->hinhanh)}}" alt=""></td>
                         <td>{{$item->tieude}}</td>
                         <td>{{$item->slug}}</td>
-                        <td>{{$item->mota}}</td>
                         <td>{{$item->danhmuc->tieude}}</td>
                         <td>{{$item->theloai->tieude}}</td>
                         <td>{{$item->quocgia->tieude}}</td>

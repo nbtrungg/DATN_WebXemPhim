@@ -207,6 +207,13 @@ body.active { overflow: hidden; }
   transition: var(--transition-1);
 }
 
+.ganre-wrapper > span {
+  color: var(--gainsboro);
+  font-size: var(--fs-9);
+  font-weight: var(--fw-500);
+  transition: var(--transition-1);
+}
+
 .ganre-wrapper > a:is(:hover, :focus) { color: var(--citrine); }
 
 .date-time { gap: 15px; }

@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 use App\Models\Theloai;
 use App\Models\Quocgia;
 use App\Models\Danhmuc;
+use App\Models\Phim;
 use Illuminate\Support\Facades\DB;
+use Termwind\Components\Raw;
+
 class IndexController extends Controller
 {
     public function trangchu(Request $request){
@@ -19,6 +22,7 @@ class IndexController extends Controller
         $danhmuc= Danhmuc::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $theloai= Theloai::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $quocgia= Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
+        
         $user = Auth::user();
         return view('user.layout_user.trangchu',compact('user','danhmuc','theloai','quocgia'));
     }
@@ -28,8 +32,9 @@ class IndexController extends Controller
         $theloai= Theloai::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $quocgia= Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $danhmuc_slug=Danhmuc::where('slug',$slug)->first();
+        $phim=Phim::where('danhmuc_id',$danhmuc_slug->id)->paginate(12);
         $user = Auth::user();
-        return view('user.layout_user.danhmuc',compact('user','danhmuc','theloai','quocgia','danhmuc_slug'));
+        return view('user.layout_user.danhmuc',compact('user','danhmuc','theloai','quocgia','danhmuc_slug','phim'));
     }
 
     public function theloai($slug){
@@ -37,8 +42,10 @@ class IndexController extends Controller
         $theloai= Theloai::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $quocgia= Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $theloai_slug=Theloai::where('slug',$slug)->first();
+        $phim=Phim::where('theloai_id',$theloai_slug->id)->paginate(12);
+
         $user = Auth::user();
-        return view('user.layout_user.theloai',compact('user','danhmuc','theloai','quocgia','theloai_slug'));
+        return view('user.layout_user.theloai',compact('user','danhmuc','theloai','quocgia','theloai_slug','phim'));
     }
 
     public function quocgia($slug){
@@ -46,16 +53,20 @@ class IndexController extends Controller
         $theloai= Theloai::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $quocgia= Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $quocgia_slug=Quocgia::where('slug',$slug)->first();
+        $phim=Phim::where('quocgia_id',$quocgia_slug->id)->paginate(12);
+
         $user = Auth::user();
-        return view('user.layout_user.quocgia',compact('user','danhmuc','theloai','quocgia','quocgia_slug'));
+        return view('user.layout_user.quocgia',compact('user','danhmuc','theloai','quocgia','quocgia_slug','phim'));
     }
 
-    public function chitietphim(){
+    public function chitietphim($slug){
         $danhmuc= Danhmuc::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $theloai= Theloai::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $quocgia= Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
+        $chitietphim= Phim::with('danhmuc','theloai','quocgia')->where('slug',$slug)->where('trangthai',1)->first();
+        $phimlienquan=Phim::with('danhmuc','theloai','quocgia')->where('danhmuc_id',$chitietphim->danhmuc->id)->orderBy(DB::raw('RAND()'))->whereNotIn('slug',[$slug])->get();
         $user = Auth::user();
-        return view('user.layout_user.chitietphim',compact('user','danhmuc','theloai','quocgia'));
+        return view('user.layout_user.chitietphim',compact('user','danhmuc','theloai','quocgia','chitietphim','phimlienquan'));
     }
 
     public function xemphim(){
