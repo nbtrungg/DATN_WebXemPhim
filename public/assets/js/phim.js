@@ -1,5 +1,12 @@
+$(document).ready(function () {
+    $("#table_phim").DataTable({
+        aLengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, "All"],
+        ],
+    });
+});
 $(".deletephim").on("click", function () {
-    let table = new DataTable('#table_phim');
     // return confirm('Are you sure want to delete?');
     var id = $(this).data('id');
     event.preventDefault(); //this will hold the url

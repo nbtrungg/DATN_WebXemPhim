@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Phim;
 use App\Models\Quocgia;
+use App\Models\Tapphim;
 use App\Models\Theloai;
 
 class PhimController extends Controller
@@ -44,6 +45,10 @@ class PhimController extends Controller
         $phim->mota=$data['mota'];
         $phim->trangthai=$data['trangthai'];
         $phim->slug=$data['slug'];
+        $phim->sotap=$data['sotap'];
+        $phim->chatluong=$data['chatluong'];
+        $phim->namphim=$data['namphim'];
+        $phim->thoiluong=$data['thoiluong'];
         $phim->danhmuc_id=$data['danhmuc_id'];
         $phim->theloai_id=$data['theloai_id'];
         $phim->quocgia_id=$data['quocgia_id'];
@@ -94,6 +99,10 @@ class PhimController extends Controller
         $phim->mota=$data['mota'];
         $phim->trangthai=$data['trangthai'];
         $phim->slug=$data['slug'];
+        $phim->sotap=$data['sotap'];
+        $phim->chatluong=$data['chatluong'];
+        $phim->namphim=$data['namphim'];
+        $phim->thoiluong=$data['thoiluong'];
         $phim->danhmuc_id=$data['danhmuc_id'];
         $phim->theloai_id=$data['theloai_id'];
         $phim->quocgia_id=$data['quocgia_id'];
@@ -125,8 +134,14 @@ class PhimController extends Controller
         // $phim->delete();
        }
     //    else{
-           $phim->delete();
-        // }
+        $tapphim=Tapphim::whereIn('phim_id',[$phim->id])->get();
+        foreach($tapphim as $key=>$item){
+            if(isset($item->linkphim)){
+                unlink('uploads/phim/'.$item->linkphim);
+               }
+        }
+            Tapphim::whereIn('phim_id',[$phim->id])->delete();
+            $phim->delete();
         return redirect()->back()->with('success','Xóa thành công!');
     }
 }

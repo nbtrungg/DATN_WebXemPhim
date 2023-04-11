@@ -1,6 +1,13 @@
-
+$(document).ready(function () {
+    $("#table_quocgia").DataTable({
+        aLengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, "All"],
+        ],
+    });
+});
 $(".deletequocgia").on("click", function () {
-    let table = new DataTable('#table_quocgia');
+    // let table = new DataTable('#table_quocgia');
     // return confirm('Are you sure want to delete?');
     var id = $(this).data('id');
     event.preventDefault(); //this will hold the url

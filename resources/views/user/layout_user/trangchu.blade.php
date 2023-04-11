@@ -248,8 +248,8 @@
     -->
  <section class="top-rated">
     <div class="container">
-       <p class="section-subtitle">Online Streaming</p>
-       <h2 class="h2 section-title">Top Rated Movies</h2>
+       <p class="section-subtitle">Bảng Xếp Hạng</p>
+       <h2 class="h2 section-title">Top Phim</h2>
        {{-- <ul class="filter-list nav nav-pills mb-3" id="pills-tab" role="tablist">
           <li>
              <button class="filter-btn">Movies</button>
@@ -373,13 +373,13 @@
 
        <ul class=" nav nav-pills mb-3 filter-list" id="pills-tab" role="tablist">
          <li class="nav-item">
-           <a class="nav-link active filter-btn" id="pills-home-tab" data-toggle="pill" href="#ngay" role="tab" aria-controls="pills-home" aria-selected="true">Ngày</a>
+           <a class="nav-link active filter-btn" id="pills-home-tab" data-toggle="pill" href="#ngay" role="tab" aria-controls="pills-home" aria-selected="true">Top Sao</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link filter-btn" id="pills-profile-tab" data-toggle="pill" href="#tuan" role="tab" aria-controls="pills-profile" aria-selected="false">Tuần</a>
+           <a class="nav-link filter-btn" id="pills-profile-tab" data-toggle="pill" href="#tuan" role="tab" aria-controls="pills-profile" aria-selected="false">Top Bình Luận</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link filter-btn" id="pills-contact-tab" data-toggle="pill" href="#thang" role="tab" aria-controls="pills-contact" aria-selected="false">Tháng</a>
+           <a class="nav-link filter-btn" id="pills-contact-tab" data-toggle="pill" href="#thang" role="tab" aria-controls="pills-contact" aria-selected="false">Top Quan Tâm</a>
          </li>
        </ul>
        <div class="tab-content" id="pills-tabContent">

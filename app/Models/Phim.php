@@ -18,4 +18,7 @@ class Phim extends Model
     public function quocgia(){
         return $this->belongsTo(Quocgia::class,'quocgia_id');
     }
+    public function tapphim(){
+        return $this->hasMany(Tapphim::class);
+    }
 }

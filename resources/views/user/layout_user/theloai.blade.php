@@ -29,13 +29,21 @@
                    <a href="{{route('chitietphim',$item->slug)}}">
                       <h3 class="card-title">{{$item->tieude}}</h3>
                    </a>
-                   <time datetime="2022">2022</time>
+                   <time datetime="{{$item->namphim}}">{{$item->namphim}}</time>
                 </div>
                 <div class="card-meta">
-                   <div class="badge badge-outline">2K</div>
+                   <div class="badge badge-outline">
+                     @if ($item->chatluong==0)
+                     HD
+                  @elseif($item->chatluong==1)
+                     2K
+                  @elseif($item->chatluong==2)
+                     4K
+                  @endif
+                   </div>
                    <div class="duration">
                       <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="PT122M">122 min</time>
+                      <time datetime="PT{{$item->thoiluong}}M">{{$item->thoiluong}} min</time>
                    </div>
                    <div class="rating">
                       <ion-icon name="star"></ion-icon>

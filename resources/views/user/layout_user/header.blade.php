@@ -36,7 +36,7 @@
         <div class="navbar-top">
 
           <a href="/index.html" class="logo">
-            <img src="/assets/images/logo.svg" alt="Filmlane logo">
+            <img src="/assets/images/logotrung.png" style="width: 75px; height:75px" alt="Filmlane logo">
           </a>
 
           <button class="menu-close-btn" data-menu-close-btn>
@@ -139,4 +139,18 @@
       </nav>
 
     </div>
+    <style>
+      a:hover{
+        color: hsl(57.04deg 97.38% 44.9%);
+      }
+      .taphover:hover{
+        color: black !important;
+        background: hsl(57.04deg 97.38% 44.9%) !important;
+      }
+      .btn-secondary.active{
+        color: #000000;
+        background-color: hsl(57.04deg 97.38% 44.9%);
+        border-color: #fbff00;
+      }
+    </style>
   </header>

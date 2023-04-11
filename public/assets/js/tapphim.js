@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    $("#table_theloai").DataTable({
+    $("#table_tap_phim").DataTable({
         aLengthMenu: [
             [5, 10, 25, 50, -1],
             [5, 10, 25, 50, "All"],
         ],
     });
 });
-$(".deletetheloai").on("click", function () {
+$(".deletetapphim").on("click", function () {
     // let table = new DataTable('#table_theloai');
     // return confirm('Are you sure want to delete?');
     var id = $(this).data('id');
@@ -25,3 +25,16 @@ $(".deletetheloai").on("click", function () {
         }
     });
 });
+//Xuất danh sách tập phim
+$('#chonphim').change(function(){
+    var id=$(this).val();
+    // alert(id);
+    $.ajax({
+        url:'/chontapphim',
+        type: 'GET',
+        data:{id:id},
+        success:function(data){
+            $('#chontap').html(data);
+        }
+    })
+})

@@ -9,6 +9,7 @@ use App\Models\Theloai;
 use App\Models\Quocgia;
 use App\Models\Danhmuc;
 use App\Models\Phim;
+use App\Models\Tapphim;
 use Illuminate\Support\Facades\DB;
 use Termwind\Components\Raw;
 
@@ -64,17 +65,30 @@ class IndexController extends Controller
         $theloai= Theloai::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $quocgia= Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $chitietphim= Phim::with('danhmuc','theloai','quocgia')->where('slug',$slug)->where('trangthai',1)->first();
+        $tapphim_1=Tapphim::with('phim')->where('phim_id',$chitietphim->id)->orderBy('tap','ASC')->take(1)->first();
         $phimlienquan=Phim::with('danhmuc','theloai','quocgia')->where('danhmuc_id',$chitietphim->danhmuc->id)->orderBy(DB::raw('RAND()'))->whereNotIn('slug',[$slug])->get();
         $user = Auth::user();
-        return view('user.layout_user.chitietphim',compact('user','danhmuc','theloai','quocgia','chitietphim','phimlienquan'));
+        return view('user.layout_user.chitietphim',compact('user','danhmuc','theloai','quocgia','chitietphim','phimlienquan','tapphim_1'));
     }
 
-    public function xemphim(){
+    public function xemphim($slug,$tap){
         $danhmuc= Danhmuc::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $theloai= Theloai::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
         $quocgia= Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai',1)->get();
+        $chitietphim= Phim::with('danhmuc','theloai','quocgia','tapphim')->where('slug',$slug)->where('trangthai',1)->first();
+        if(isset($tap)){
+            $sotapphim=$tap;
+            $sotapphim=substr($tap,4);
+            $tapphim=Tapphim::where('phim_id',$chitietphim->id)->where('tap',$sotapphim)->first();
+        }
+        else{
+            $sotapphim=1;
+            $tapphim=Tapphim::where('phim_id',$chitietphim->id)->where('tap',$sotapphim)->first();
+        }
+        $phimlienquan=Phim::with('danhmuc','theloai','quocgia')->where('danhmuc_id',$chitietphim->danhmuc->id)->orderBy(DB::raw('RAND()'))->whereNotIn('slug',[$slug])->get();
         $user = Auth::user();
-        return view('user.layout_user.xemphim',compact('user','danhmuc','theloai','quocgia'));
+        return view('user.layout_user.xemphim',compact('user','danhmuc','theloai','quocgia','chitietphim','phimlienquan','tapphim','sotapphim'));
+        // dd($chitietphim);
     }
 
     public function tapphim(){

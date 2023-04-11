@@ -63,14 +63,35 @@
                 </div>
                 <div class="form-group{{ $errors->has('slug') ? ' has-error' : '' }}">
                   {!! Form::label('slug', 'Slug') !!}
-                  {!! Form::text('slug', isset($editphim) ? $editphim->slug : '', ['readonly','id'=>'convert_slug', 'class' => 'form-control', 'required' => 'required']) !!}
+                  {!! Form::text('slug', isset($editphim) ? $editphim->slug : '', ['id'=>'convert_slug', 'class' => 'form-control', 'required' => 'required']) !!}
                   <small class="text-danger">{{ $errors->first('slug') }}</small>
                   </div>
-                <div class="form-group{{ $errors->has('inputname') ? ' has-error' : '' }}">
+                <div class="form-group{{ $errors->has('mota') ? ' has-error' : '' }}">
                 {!! Form::label('mota', 'Mô Tả') !!}
                 {!! Form::textarea('mota', isset($editphim) ? $editphim->mota : '', ['class' => 'form-control', 'required' => 'required']) !!}
                 <small class="text-danger">{{ $errors->first('mota') }}</small>
                 </div>
+                <div class="form-group{{ $errors->has('sotap') ? ' has-error' : '' }}">
+                  {!! Form::label('sotap', 'Số Tập') !!}
+                  {!! Form::number('sotap', isset($editphim) ? $editphim->sotap : '', ['class' => 'form-control', 'required' => 'required']) !!}
+                  <small class="text-danger">{{ $errors->first('sotap') }}</small>
+                  </div>
+                <div class="form-group{{ $errors->has('thoiluong') ? ' has-error' : '' }}">
+                {!! Form::label('thoiluong', 'Thời Lượng') !!}
+                {!! Form::number('thoiluong', isset($editphim) ? $editphim->thoiluong : '', ['class' => 'form-control', 'required' => 'required']) !!}
+                <small class="text-danger">{{ $errors->first('thoiluong') }}</small>
+                </div>
+                <div class="form-group{{ $errors->has('chatluong') ? ' has-error' : '' }}">
+                  {!! Form::label('chatluong', 'Chất Lượng') !!}
+                  {!! Form::select('chatluong',['0'=>'HD','1'=>'2K','2'=>'4K'], isset($editphim) ? $editphim->chatluong : '', ['id' => 'chatluong', 'class' => 'form-control', 'required' => 'required']) !!}
+                  <small class="text-danger">{{ $errors->first('chatluong') }}</small>
+                  </div>
+                <div class="form-group{{ $errors->has('namphim') ? ' has-error' : '' }}">
+                {!! Form::label('namphim', 'Năm Phát Hành') !!}
+                {!! Form::selectYear('namphim', date('2000'), date(today()),isset($editphim) ? $editphim->namphim : '', ['class' => 'form-control', 'required' => 'required']) !!}
+                <small class="text-danger">{{ $errors->first('namphim') }}</small>
+                </div>
+                
                 <div class="form-group{{ $errors->has('trangthai') ? ' has-error' : '' }}">
                 {!! Form::label('trangthai', 'Trạng Thái') !!}
                 {!! Form::select('trangthai',['1'=>'Hiển Thị','0'=>'Không Hiển Thị'], isset($editphim) ? $editphim->trangthai : '', ['id' => 'trangthai', 'class' => 'form-control', 'required' => 'required']) !!}
@@ -109,6 +130,7 @@
               <a href="{{route('phim.create')}}" class="btn btn-secondary">hủy bỏ</a>
                 {!! Form::close() !!}
             </div>
+            
         </div>
         <div class="card card-primary">
             <div class="card-body">
@@ -118,7 +140,10 @@
                         <th scope="col">STT</th>
                         <th scope="col">Hình Ảnh</th>
                         <th scope="col">Tiêu Đề</th>
-                        <th scope="col">Slug</th>
+                        <th scope="col">Số Tập</th>
+                        <th scope="col">Chất Lượng</th>
+                        <th scope="col">Năm</th>
+                        <th scope="col">Thời Lượng</th>
                         <th scope="col">Danh Mục</th>
                         <th scope="col">Thể Loại</th>
                         <th scope="col">Quốc Gia</th>
@@ -133,7 +158,18 @@
                         <th scope="row">{{$key+1}}</th>
                         <td><img style="width: 60px" src="{{asset('uploads/anhphim/'.$item->hinhanh)}}" alt=""></td>
                         <td>{{$item->tieude}}</td>
-                        <td>{{$item->slug}}</td>
+                        <td>{{$item->sotap}}</td>
+                        <td>
+                          @if ($item->chatluong==0)
+                            HD
+                          @elseif($item->chatluong==1)
+                            2K
+                          @elseif($item->chatluong==2)
+                            4K
+                          @endif
+                        </td>
+                        <td>{{$item->namphim}}</td>
+                        <td>{{$item->thoiluong}}</td>
                         <td>{{$item->danhmuc->tieude}}</td>
                         <td>{{$item->theloai->tieude}}</td>
                         <td>{{$item->quocgia->tieude}}</td>

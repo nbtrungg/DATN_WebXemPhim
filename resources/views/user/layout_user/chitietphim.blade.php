@@ -1,5 +1,7 @@
 @extends('user.index')
 @section('content')
+
+
 <!-- 
    - #MOVIE DETAIL
    -->
@@ -7,9 +9,11 @@
     <div class="container">
        <figure class="movie-detail-banner">
           <img style="width: 300px" src="{{asset('/uploads/anhphim/'.$chitietphim->hinhanh)}}" alt="{{$chitietphim->tieude}}">
-          <a class="play-btn" href="{{route('xemphim')}}">
-             <ion-icon name="play-circle-outline"></ion-icon>
-          </a>
+          @if (isset($tapphim_1->tap))
+            <a class="play-btn" href="{{url('xem-phim/'.$chitietphim->slug.'/tap-'.$tapphim_1->tap)}}">
+               <ion-icon name="play-circle-outline"></ion-icon>
+            </a>             
+          @endif
        </figure>
        <div class="movie-detail-content">
           {{-- <p class="detail-subtitle">New Episodes</p> --}}
@@ -19,18 +23,26 @@
           </h1>
           <div class="meta-wrapper">
              <div class="badge-wrapper">
-                <div class="badge badge-fill">PG 13</div>
-                <div class="badge badge-outline">HD</div>
+                {{-- <div class="badge badge-fill">PG 13</div> --}}
+                <div class="badge badge-outline">
+                  @if ($chitietphim->chatluong==0)
+                     HD
+                  @elseif($chitietphim->chatluong==1)
+                     2K
+                  @elseif($chitietphim->chatluong==2)
+                     4K
+                  @endif
+               </div>
              </div>
              
              <div class="date-time">
                 <div>
                    <ion-icon name="calendar-outline"></ion-icon>
-                   <time datetime="2021">2021</time>
+                   <time datetime="{{$chitietphim->namphim}}">{{$chitietphim->namphim}}</time>
                 </div>
                 <div>
                    <ion-icon name="time-outline"></ion-icon>
-                   <time datetime="PT115M">115 min</time>
+                   <time datetime="P{{$chitietphim->thoiluong}}TM">{{$chitietphim->thoiluong}} min</time>
                 </div>
              </div>
           </div>
@@ -79,6 +91,199 @@
        </div>
     </div>
  </section>
+<style>
+   /* body{margin-top:20px;} */
+
+   .content-item {
+      padding:30px 0;
+      background-color:#FFFFFF;
+   }
+
+   .content-item.grey {
+      background-color:#F0F0F0;
+      padding:50px 0;
+      height:100%;
+   }
+
+   .content-item h2 {
+      font-weight:700;
+      font-size:35px;
+      line-height:45px;
+      text-transform:uppercase;
+      margin:20px 0;
+   }
+
+   .content-item h3 {
+      font-weight:400;
+      font-size:20px;
+      color:#555555;
+      margin:10px 0 15px;
+      padding:0;
+   }
+
+   .content-headline {
+      height:1px;
+      text-align:center;
+      margin:20px 0 70px;
+   }
+
+   .content-headline h2 {
+      background-color:#FFFFFF;
+      display:inline-block;
+      margin:-20px auto 0;
+      padding:0 20px;
+   }
+
+   .grey .content-headline h2 {
+      background-color:#F0F0F0;
+   }
+
+   .content-headline h3 {
+      font-size:14px;
+      color:#AAAAAA;
+      display:block;
+   }
+
+
+   #comments {
+      box-shadow: 0 -1px 6px 1px rgba(0,0,0,0.1);
+      background-color:#FFFFFF;
+   }
+
+   #comments form {
+      margin-bottom:30px;
+   }
+
+   #comments .btn {
+      margin-top:7px;
+   }
+
+   #comments form fieldset {
+      clear:both;
+   }
+
+   #comments form textarea {
+      height:100px;
+   }
+
+   #comments .media {
+      border-top:1px dashed #DDDDDD;
+      padding:20px 0;
+      margin:0;
+   }
+
+   #comments .media > .pull-left {
+      margin-right:20px;
+   }
+
+   #comments .media img {
+      max-width:100px;
+   }
+
+   #comments .media h4 {
+      margin:0 0 10px;
+   }
+
+   #comments .media h4 span {
+      font-size:14px;
+      float:right;
+      color:#999999;
+   }
+
+   #comments .media p {
+      margin-bottom:15px;
+      text-align:justify;
+   }
+
+   #comments .media-detail {
+      margin:0;
+   }
+
+   #comments .media-detail li {
+      color:#AAAAAA;
+      font-size:12px;
+      padding-right: 10px;
+      font-weight:600;
+   }
+
+   #comments .media-detail a:hover {
+      text-decoration:underline;
+   }
+
+   #comments .media-detail li:last-child {
+      padding-right:0;
+   }
+
+   #comments .media-detail li i {
+      color:#666666;
+      font-size:15px;
+      margin-right:10px;
+   }
+
+   .binhluan:hover{
+      border: 2px solid #e2d703 !important;
+      color: white !important;
+   }
+</style>
+{{-- bình luận --}}
+<section style="background: #e2d703;" class="content-item" id="comments">
+   <div class="container">   
+      <div class="flex-wrapper">
+         <div class="title-wrapper">
+            <p style="color: black" class="section-subtitle">Bạn Có Thể Đánh Giá Phim Ở Đây</p>
+            <h2 class="h2 section-title">Bình Luận</h2>
+         </div>
+      </div>
+      <div class="">
+           <div class="col-sm-12">   
+               <form>
+                  <h3 class="pull-left">Nguyễn Bảo Trung</h3>
+                   <fieldset>
+                       <div class="row">
+                           {{-- <div class="col-sm-3 col-lg-2 hidden-xs">
+                              <img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                           </div> --}}
+                           <div class="form-group">
+                               <textarea class="form-control" id="message" placeholder="Your message" required=""></textarea>
+                           </div>
+                           <div style="float: right;" class="form-group">
+                              <button style="color: #e2d703;    background:#242c38 ; border: 2px solid black" type="submit" class="binhluan btn btn-normal pull-right">Thêm Bình Luận</button>
+                          </div>
+                       </div>  	
+                   </fieldset>
+               </form>
+               
+               <h3>4 Comments</h3>
+               
+               <!-- COMMENT 1 - START -->
+               <div class="media">
+                   {{-- <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a> --}}
+                   <div class="media-body">
+                       <h4 class="media-heading">John Doe</h4>
+                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                       <ul class="list-unstyled list-inline media-detail pull-left">
+                           <li style="color: black"><i style="color: black" class="fa fa-calendar"></i>27/02/2014</li>
+                       </ul>
+                   </div>
+               </div>
+               <!-- COMMENT 1 - END -->
+               <!-- COMMENT 1 - START -->
+               <div class="media">
+                  {{-- <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a> --}}
+                  <div class="media-body">
+                      <h4 class="media-heading">John Doe</h4>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                      <ul class="list-unstyled list-inline media-detail pull-left">
+                          <li style="color: black"><i class="fa fa-calendar"></i>27/02/2014</li>
+                      </ul>
+                  </div>
+              </div>
+              <!-- COMMENT 1 - END -->
+           </div>
+       </div>
+   </div>
+</section>
+
  <!-- 
     - #TV SERIES
     -->
