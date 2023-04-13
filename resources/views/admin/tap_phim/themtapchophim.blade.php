@@ -57,8 +57,15 @@
               {!! Form::open(['route'=>['tap-phim.update',$edittapphim->id],'method'=>'PUT','enctype'=>'multipart/form-data']) !!}
               @endif
                 <div class="form-group{{ $errors->has('chonphim') ? ' has-error' : '' }}">
-                {!! Form::label('chonphim', 'Chọn Phim') !!}
-                {!! Form::select('chonphim',[''=>'Chọn Phim','Phim gần nhất'=>$listphim], isset($edittapphim) ? $edittapphim->phim_id : '', ['id' => 'chonphim', 'class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::label('chonphim1', 'Phim') !!}
+                @if (isset($phim))
+                {!! Form::text('chonphim1', isset($phim) ? $phim->tieude : '', ['readonly', 'class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::hidden('chonphim', $phim->id) !!}
+                @elseif(isset($edittapphim))
+                {!! Form::text('chonphim1', isset($edittapphim) ? $edittapphim->phim->tieude : '', ['readonly', 'class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::hidden('chonphim', $edittapphim->phim->id) !!}
+                @endif
+                {{-- {!! Form::select('chonphim',[''=>'Chọn Phim','Phim gần nhất'=>$listphim], isset($edittapphim) ? $edittapphim->phim_id : '', ['id' => 'chonphim', 'class' => 'form-control', 'required' => 'required']) !!} --}}
                 <small class="text-danger">{{ $errors->first('chonphim') }}</small>
                 </div>
                 <div class="form-group{{ $errors->has('uploadphim') ? ' has-error' : '' }}">
@@ -72,17 +79,15 @@
                   @endif
                   </div>
                   <div class="form-group{{ $errors->has('chontap') ? ' has-error' : '' }}">
-                    {!! Form::label('chontap', 'Chọn Tập') !!}
                     @if(!empty($edittapphim))
+                    {!! Form::label('chontap', 'Chọn Tập') !!}
                     <select name="chontapupdate" class="form-control" readonly>
                       <option value="{{$edittapphim->tap}}">{{$edittapphim->tap}}</option>
                     </select>
                     {{-- {!! Form::select('chontap', isset($edittapphim) ? $edittapphim->tap : '', ['class' => 'form-control', ]) !!} --}}
                     @else
-                    <select name="chontap" class="form-control" id="chontap">
-                      <option>Chọn Tập</option>
-                      <option value=""></option>
-                    </select>
+                    {!! Form::label('chontap', 'Chọn Tập') !!}
+                    {!! Form::selectRange('chontap', 1,$phim->sotap,null, ['class' => 'form-control']) !!}
                     @endif
                     <small class="text-danger">{{ $errors->first('chontap') }}</small>
                     </div>

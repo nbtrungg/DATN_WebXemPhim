@@ -1,7 +1,17 @@
 @extends('user.index')
 @section('content')
 
-
+<style>
+   .page-link{
+      background: #110f1a;
+      color: yellow;
+   }
+   .page-item.active .page-link{
+      background: yellow;
+      color: #110f1a;
+      border-color:white black;
+   }
+</style>
 <!-- 
    - #MOVIE DETAIL
    -->
@@ -236,49 +246,52 @@
       </div>
       <div class="">
            <div class="col-sm-12">   
-               <form>
-                  <h3 class="pull-left">Nguyễn Bảo Trung</h3>
+               <form action="" method="POST">
+                  <h3  class="pull-left">{{$user->name}}</h3>
+                  <input type="hidden" id="tenbinhluan" value="{{$user->name}}">
                    <fieldset>
                        <div class="row">
                            {{-- <div class="col-sm-3 col-lg-2 hidden-xs">
                               <img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
                            </div> --}}
                            <div class="form-group">
-                               <textarea class="form-control" id="message" placeholder="Your message" required=""></textarea>
+                               <textarea class="form-control" id="binhluan-content" placeholder="Viết bình luận của bạn" required=""></textarea>
+                               <input type="hidden" id="phim_id" value="{{$chitietphim->id}}">
+                               <input type="hidden" id="user_id" value="{{$user->id}}">
+
                            </div>
                            <div style="float: right;" class="form-group">
-                              <button style="color: #e2d703;    background:#242c38 ; border: 2px solid black" type="submit" class="binhluan btn btn-normal pull-right">Thêm Bình Luận</button>
+                              <button style="color: #e2d703; background:#242c38 ; border: 2px solid black" id="binhluan" type="button" class="binhluan btn btn-normal pull-right">Thêm Bình Luận</button>
                           </div>
                        </div>  	
                    </fieldset>
+                  @csrf
                </form>
                
-               <h3>4 Comments</h3>
+               <h3>{{$tongbinhluan}} Bình luận</h3>
                
                <!-- COMMENT 1 - START -->
-               <div class="media">
-                   {{-- <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a> --}}
-                   <div class="media-body">
-                       <h4 class="media-heading">John Doe</h4>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                       <ul class="list-unstyled list-inline media-detail pull-left">
-                           <li style="color: black"><i style="color: black" class="fa fa-calendar"></i>27/02/2014</li>
-                       </ul>
-                   </div>
+               <div id="hienbinhluan">
+                  @foreach ($binhluan as $key => $item)
+                      
+                  <div class="media">
+                     {{-- <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a> --}}
+                     <div class="media-body">
+                         <h4 class="media-heading">{{$item->user->name}}</h4>
+                         <p>{{$item->noidung}}</p>
+                         <ul class="list-unstyled list-inline media-detail pull-left">
+                             <li style="color: black"><i style="color: black" class="fa fa-calendar"></i>{{$item->created_at->format('d-m-Y')}}</li>
+                         </ul>
+                     </div>
+                 </div>
+                 <!-- COMMENT 1 - END -->
+                  @endforeach
                </div>
-               <!-- COMMENT 1 - END -->
-               <!-- COMMENT 1 - START -->
-               <div class="media">
-                  {{-- <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a> --}}
-                  <div class="media-body">
-                      <h4 class="media-heading">John Doe</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                      <ul class="list-unstyled list-inline media-detail pull-left">
-                          <li style="color: black"><i class="fa fa-calendar"></i>27/02/2014</li>
-                      </ul>
-                  </div>
-              </div>
-              <!-- COMMENT 1 - END -->
+               <div style="display: flex; justify-content: space-evenly; margin-top:50px">
+                  {{$binhluan->links("pagination::bootstrap-4")}}
+                </div>
+               
+               
            </div>
        </div>
    </div>

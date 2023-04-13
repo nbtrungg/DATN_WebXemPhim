@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Binhluan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Theloai;
@@ -12,6 +13,7 @@ use App\Models\Phim;
 use App\Models\Tapphim;
 use Illuminate\Support\Facades\DB;
 use Termwind\Components\Raw;
+use Illuminate\Support\Carbon;
 
 class IndexController extends Controller
 {
@@ -67,8 +69,10 @@ class IndexController extends Controller
         $chitietphim= Phim::with('danhmuc','theloai','quocgia')->where('slug',$slug)->where('trangthai',1)->first();
         $tapphim_1=Tapphim::with('phim')->where('phim_id',$chitietphim->id)->orderBy('tap','ASC')->take(1)->first();
         $phimlienquan=Phim::with('danhmuc','theloai','quocgia')->where('danhmuc_id',$chitietphim->danhmuc->id)->orderBy(DB::raw('RAND()'))->whereNotIn('slug',[$slug])->get();
+        $binhluan=Binhluan::with('user')->where('phim_id',$chitietphim->id)->orderBy('id','DESC')->paginate(5);
+        $tongbinhluan=Binhluan::with('user')->where('phim_id',$chitietphim->id)->orderBy('id','DESC')->count();
         $user = Auth::user();
-        return view('user.layout_user.chitietphim',compact('user','danhmuc','theloai','quocgia','chitietphim','phimlienquan','tapphim_1'));
+        return view('user.layout_user.chitietphim',compact('user','danhmuc','theloai','quocgia','chitietphim','phimlienquan','tapphim_1','binhluan','tongbinhluan'));
     }
 
     public function xemphim($slug,$tap){
@@ -102,5 +106,20 @@ class IndexController extends Controller
     public function trangchuadmin(){
         $user = Auth::user();
         return view('admin.index_admin',compact('user'));
+    }
+
+    public function binhluan(Request $request){
+        // $data= $request->all();
+        $binhluan=new Binhluan();
+        $binhluan->user_id=$request->input('user_id');
+        $binhluan->phim_id=$request->input('phim_id');;
+        $binhluan->noidung=$request->input('content');;
+        $binhluan->save();
+        $dt = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y');
+        return response()->json([
+            'success' => true,
+            'message' => 'Comment added successfully.',
+            'ngay'=> $dt
+        ]);
     }
 }

@@ -42,6 +42,8 @@ Route:: middleware(['auth'])->group(function(){
         Route::get('/chi-tiet-phim/{slug}',[IndexController::class,'chitietphim'])->name('chitietphim');
         Route::get('/xem-phim/{slug}/{tap}',[IndexController::class,'xemphim'])->name('xemphim');
         Route::get('/tap-phim',[IndexController::class,'tapphim'])->name('tapphim');
+        // bình luận
+        Route::post('/binhluan',[IndexController::class,'binhluan']);
     });
 });
 
@@ -61,12 +63,14 @@ Route::get('/admin/logout',[LoginController::class,'logout_admin'])->name('logou
             Route::resource('quoc-gia',QuocGiaController::class);
             Route::resource('phim',PhimController::class);
             Route::resource('tap-phim',TapPhimController::class);
+            Route::get('them-tap-phim/{id}',[TapPhimController::class,'themtapphim'])->name('them-tap-phim');;
+
         });
         //route sắp xếp bảng
         Route::post('sapxepbang-danhmuc',[DanhMucController::class,'sapxepbang']);
         Route::post('sapxepbang-theloai',[TheLoaiController::class,'sapxepbang']);
         Route::post('sapxepbang-quocgia',[QuocGiaController::class,'sapxepbang']);
         Route::get('/chontapphim',[TapPhimController::class,'chontapphim'])->name('chontapphim');
-
+        
 });
 

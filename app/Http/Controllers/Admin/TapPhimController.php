@@ -52,6 +52,14 @@ class TapPhimController extends Controller
         return redirect()->back()->with('success','Thêm thành công!');
     }
 
+    public function themtapphim($id){
+        $user = Auth::user();
+        $listtapphim=Tapphim::with('phim')->where('phim_id',$id)->orderBy('tap','DESC')->get();
+        $phim=Phim::find($id);
+        // $listphim=Phim::orderBy('id','DESC')->pluck('tieude','id');
+        return view('admin.tap_phim.themtapchophim',compact('listtapphim','user','phim'));
+    }
+
     /**
      * Display the specified resource.
      */
@@ -66,10 +74,11 @@ class TapPhimController extends Controller
     public function edit(string $id)
     {
         $user = Auth::user();
-        $listtapphim=Tapphim::with('phim')->orderBy('id','DESC')->get();
+        // $listtapphim=Tapphim::with('phim')->orderBy('id','DESC')->get();
         $listphim=Phim::orderBy('id','DESC')->pluck('tieude','id');
         $edittapphim=Tapphim::find($id);
-        return view('admin.tap_phim.formtapphim',compact('listtapphim','user','listphim','edittapphim'));
+        $listtapphim=Tapphim::with('phim')->where('phim_id',$edittapphim->phim_id)->orderBy('tap','DESC')->get();
+        return view('admin.tap_phim.themtapchophim',compact('listtapphim','user','listphim','edittapphim'));
     }
 
     /**
@@ -95,7 +104,7 @@ class TapPhimController extends Controller
             $tapphim->linkphim=$new_phim;
         }
         $tapphim->save();
-        return redirect()->route('tap-phim.create')->with('success','Cập nhật thành công!');
+        return redirect()->route('them-tap-phim',[$data['chonphim']])->with('success','Cập nhật thành công!');
     }
 
     /**

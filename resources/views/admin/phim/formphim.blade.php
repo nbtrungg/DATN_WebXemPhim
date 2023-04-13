@@ -187,6 +187,7 @@
                             {!! Form::submit('Xóa', ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
                             <a href="{{route('phim.edit',$item->id)}}" class="btn btn-warning">Sửa</a>
+                            <a href="{{route('them-tap-phim',[$item->id])}}" class="btn btn-success">Thêm tập phim</a>
                           </div>
                         </td>
                       </tr>
