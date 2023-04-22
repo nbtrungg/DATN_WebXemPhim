@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Goidichvu;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 // use App\Models\User;
@@ -49,9 +51,30 @@ class LoginController extends Controller
         }
         return redirect()->back();
     }
+// Đăng ký user
+    public function postdangky(Request $request){
+        $user= new User();
+        $user->name=$request->input('name');
+        $user->email=$request->input('email_dk');
+        $user->password=bcrypt($request->input('pass_dk'));
+        $user->save();
+        return redirect()->route('login_user')->with('success','Đăng ký thành công!');
+    }
+// check email trùng khi đăng ký
+    public function checkEmail(Request $request)
+    {
+        $email = (string)$request->input('email_dk');
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            return response()->json(false);
+        } else {
+            return response()->json(true);
+        }
+    }
 
     public function getDangKy(){
-        $goidichvu= DB::table('goidichvu')->where('id',1)->get();
+        $goidichvu= Goidichvu::where('trangthai',1)->orderBy('sapxephang','ASC')->get();
         return view('user.dangkygoi',compact('goidichvu'));
     }
 

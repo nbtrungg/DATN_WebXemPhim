@@ -12,11 +12,14 @@
    }
 </style>
 <section class="top-rated">
-    <div class="container" style="margin-top: 80px">
-      <h2 class="h2 section-title" style="margin-bottom: 10px;">{{$danhmuc_slug->tieude}}</h2>
-      <p class="section-subtitle" style="margin-bottom: 50px;">{{$danhmuc_slug->mota}}</p>
+    <div class="container" style="margin-top: 30px">
+      {{-- <h2 class="h2 section-title" style="margin-bottom: 10px;">{{$search}}</h2>
+      <p class="section-subtitle" style="margin-bottom: 50px;">Từ Khóa</p> --}}
+      <p class="section-subtitle">KẾT QUẢ CHO TỪ KHÓA:</p>
+       <h2 class="h2 section-title">"{{$search}}"</h2>
        <ul class="movies-list">
-         @foreach ($phim as $key=>$item)
+          @foreach ($phim as $key=>$item)
+
           <li>
              <div class="movie-card">
                 <a href="{{route('chitietphim',$item->slug)}}">
@@ -50,7 +53,8 @@
                    </div>
                 </div>
              </div>
-          </li>          
+          </li>
+                       
          @endforeach
        </ul>
        <div style="display: flex; justify-content: space-evenly; margin-top:50px">

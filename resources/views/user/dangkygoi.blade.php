@@ -207,71 +207,27 @@ rel="stylesheet"
             
           </div>
             <ul class="movies-list">
-
-                <li>
-                    <div class="movie-card">
-                        <div class="card">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
-                            <div class="card-body">
-                              <h5 class="">{{$goidichvu[0]->name}}</h5>
-                              <p class="card-text">{{$goidichvu[0]->thoigian}} ngày xem phim thả ga.</p>
-                              <form action="{{route('vnpay')}}" method="POST">
-                                @csrf
-                                <input type="hidden" name="gia" value="{{$goidichvu[0]->gia}}">
-                                <input type="hidden" name="goi_id" value="{{$goidichvu[0]->id}}">
-                                <button style="background: yellow; color:black" type="submit" name='redirect' href="{{route('vnpay')}}" class="btn btn-primary">Đăng Ký</button>
-                              </form>
-                            </div>
+              @foreach ($goidichvu as $key => $item)
+                  
+              <li>
+                  <div class="movie-card">
+                      <div class="card">
+                          <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
+                          <div class="card-body">
+                            <h5 class="">{{$item->name}}</h5>
+                            <p class="card-text">{{$item->mota}}</p>
+                            <form action="{{route('vnpay')}}" method="POST">
+                              @csrf
+                              <input type="hidden" name="gia" value="{{$item->gia}}">
+                              <input type="hidden" name="goi_id" value="{{$item->id}}">
+                              <button style="background: yellow; color:black" type="submit" name='redirect' href="{{route('vnpay')}}" class="btn btn-primary">Đăng Ký</button>
+                            </form>
                           </div>
-    
-                    </div>
-                </li>
-    
-                <li>
-                    <div class="movie-card">
-                        <div class="card">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                              <a href="#!" class="btn btn-primary">Button</a>
-                            </div>
-                          </div>
-                    
-    
-                    </div>
-                </li>
-    
-                <li>
-                    <div class="movie-card">
-                        <div class="card">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                              <a href="#!" class="btn btn-primary">Button</a>
-                            </div>
-                          </div>
-                    
-    
-                    </div>
-                </li>
-    
-                <li>
-                    <div class="movie-card">
-    
-                        <div class="card">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp" class="card-img-top" alt="Fissure in Sandstone"/>
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                              <a href="#!" class="btn btn-primary">Button</a>
-                            </div>
-                          </div>
-    
-                    </div>
-                </li>
-    
+                        </div>
+  
+                  </div>
+              </li>
+              @endforeach
               </ul>
             
 

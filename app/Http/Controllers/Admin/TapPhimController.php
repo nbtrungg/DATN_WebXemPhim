@@ -35,21 +35,30 @@ class TapPhimController extends Controller
     public function store(Request $request)
     {
         $data= $request->all();
-        $tapphim=new Tapphim();
-        $tapphim->phim_id=$data['chonphim'];
-        $tapphim->tap=$data['chontap'];
-        //Thêm ảnh
-        $get_phim=$request->file('uploadphim');
-        $path='uploads/phim/';
-        if($get_phim){
-            $get_name_phim=$get_phim->getClientOriginalName();
-            $name_phim=current(explode('.',$get_name_phim));
-            $new_phim=$name_phim.rand(0,9999).'.'.$get_phim->getClientOriginalExtension();
-            $get_phim->move($path,$new_phim);
-            $tapphim->linkphim=$new_phim;
+        $tapphim_check=Tapphim::where('tap',$data['chontap'])->where('phim_id',$data['chonphim'])->count();
+        // dd($tapphim_check);
+        if($tapphim_check>0){
+            return redirect()->back()->with('error','Tập phim đã tồn tại');
         }
-        $tapphim->save();
-        return redirect()->back()->with('success','Thêm thành công!');
+        else{
+            $tapphim=new Tapphim();
+            $tapphim->phim_id=$data['chonphim'];
+            $tapphim->tap=$data['chontap'];
+            $tapphim->linkphim=$data['linkphim'];
+
+            //Thêm phim
+            // $get_phim=$request->file('uploadphim');
+            // $path='uploads/phim/';
+            // if($get_phim){
+            //     $get_name_phim=$get_phim->getClientOriginalName();
+            //     $name_phim=current(explode('.',$get_name_phim));
+            //     $new_phim=$name_phim.rand(0,9999).'.'.$get_phim->getClientOriginalExtension();
+            //     $get_phim->move($path,$new_phim);
+            //     $tapphim->linkphim=$new_phim;
+            // }
+            $tapphim->save();
+            return redirect()->back()->with('success','Thêm thành công!');
+        }
     }
 
     public function themtapphim($id){
@@ -90,19 +99,21 @@ class TapPhimController extends Controller
         $tapphim=Tapphim::find($id);
         $tapphim->phim_id=$data['chonphim'];
         $tapphim->tap=$data['chontapupdate'];
-        //Thêm ảnh
-        $get_phim=$request->file('uploadphim');
-        $path='uploads/phim/';
-        if($get_phim){
-            if(isset($tapphim->linkphim)){
-                unlink('uploads/phim/'.$tapphim->linkphim);
-            }
-            $get_name_phim=$get_phim->getClientOriginalName();
-            $name_phim=current(explode('.',$get_name_phim));
-            $new_phim=$name_phim.rand(0,9999).'.'.$get_phim->getClientOriginalExtension();
-            $get_phim->move($path,$new_phim);
-            $tapphim->linkphim=$new_phim;
-        }
+        $tapphim->linkphim=$data['linkphim'];
+
+        //Thêm phim
+        // $get_phim=$request->file('uploadphim');
+        // $path='uploads/phim/';
+        // if($get_phim){
+        //     if(isset($tapphim->linkphim)){
+        //         unlink('uploads/phim/'.$tapphim->linkphim);
+        //     }
+        //     $get_name_phim=$get_phim->getClientOriginalName();
+        //     $name_phim=current(explode('.',$get_name_phim));
+        //     $new_phim=$name_phim.rand(0,9999).'.'.$get_phim->getClientOriginalExtension();
+        //     $get_phim->move($path,$new_phim);
+        //     $tapphim->linkphim=$new_phim;
+        // }
         $tapphim->save();
         return redirect()->route('them-tap-phim',[$data['chonphim']])->with('success','Cập nhật thành công!');
     }
@@ -113,13 +124,12 @@ class TapPhimController extends Controller
     public function destroy(string $id)
     {
         $tapphim = Tapphim::find($id);
-       if(isset($tapphim->linkphim)){
-        unlink('uploads/phim/'.$tapphim->linkphim);
-        // $phim->delete();
-       }
-    //    else{
+    //    if(isset($tapphim->linkphim)){
+    //     unlink('uploads/phim/'.$tapphim->linkphim);
+    //    }
+
            $tapphim->delete();
-        // }
+
         return redirect()->back()->with('success','Xóa thành công!');
     }
 

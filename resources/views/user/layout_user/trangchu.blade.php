@@ -51,195 +51,87 @@
     <div class="container">
        <div class="flex-wrapper">
           <div class="title-wrapper">
-             <p class="section-subtitle">Online Streaming</p>
-             <h2 class="h2 section-title">Upcoming Movies</h2>
+             <p class="section-subtitle">Phim Hay Dành Cho Bạn</p>
+             <h2 class="h2 section-title">Đề Xuất</h2>
           </div>
        </div>
        <ul class="movies-list  has-scrollbar">
-          <li>
-             <div class="movie-card">
-                <a href="">
-                   <figure class="card-banner">
-                      <img src="/assets/images/upcoming-1.png" alt="The Northman movie poster">
-                   </figure>
-                </a>
-                <div class="title-wrapper">
-                   <a href="/movie-details.html">
-                      <h3 class="card-title">The Northman</h3>
-                   </a>
-                   <time datetime="2022">2022</time>
-                </div>
-                <div class="card-meta">
-                   <div class="badge badge-outline">HD</div>
-                   <div class="duration">
-                      <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="PT137M">137 min</time>
-                   </div>
-                   <div class="rating">
-                      <ion-icon name="star"></ion-icon>
-                      <data>8.5</data>
-                   </div>
-                </div>
-             </div>
-          </li>
-          <li>
+         @if(!empty($recommendations))
+         @foreach ($recommendations as $key => $item)
+         <li>
             <div class="movie-card">
-               <a href="">
+               <a href="{{route('chitietphim',$item->slug)}}">
                   <figure class="card-banner">
-                     <img src="/assets/images/upcoming-1.png" alt="The Northman movie poster">
+                     <img src="{{asset('/uploads/anhphim/'.$item->hinhanh)}}" alt="{{$item->tieude}}">
                   </figure>
                </a>
                <div class="title-wrapper">
-                  <a href="/movie-details.html">
-                     <h3 class="card-title">The Northman</h3>
+                  <a href="{{route('chitietphim',$item->slug)}}">
+                     <h3 class="card-title">{{$item->tieude}}</h3>
                   </a>
-                  <time datetime="2022">2022</time>
+                  <time datetime="{{$item->namphim}}">{{$item->namphim}}</time>
                </div>
                <div class="card-meta">
-                  <div class="badge badge-outline">HD</div>
+                  <div class="badge badge-outline">
+                     @if ($item->chatluong==0)
+                     HD
+                  @elseif($item->chatluong==1)
+                     2K
+                  @elseif($item->chatluong==2)
+                     4K
+                  @endif
+                   </div>
                   <div class="duration">
                      <ion-icon name="time-outline"></ion-icon>
-                     <time datetime="PT137M">137 min</time>
+                     <time datetime="PT{{$item->thoiluong}}M">{{$item->thoiluong}} min</time>
                   </div>
                   <div class="rating">
                      <ion-icon name="star"></ion-icon>
-                     <data>8.5</data>
+                     <data>{{$item->tbdanhgia}}</data>
                   </div>
                </div>
             </div>
          </li>
+         @endforeach
+         @else
+         @foreach ($phimtopsao as $key => $item)
          <li>
-             <div class="movie-card">
-                <a href="">
-                   <figure class="card-banner">
-                      <img src="/assets/images/upcoming-1.png" alt="The Northman movie poster">
-                   </figure>
-                </a>
-                <div class="title-wrapper">
-                   <a href="/movie-details.html">
-                      <h3 class="card-title">The Northman</h3>
-                   </a>
-                   <time datetime="2022">2022</time>
-                </div>
-                <div class="card-meta">
-                   <div class="badge badge-outline">HD</div>
-                   <div class="duration">
-                      <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="PT137M">137 min</time>
+            <div class="movie-card">
+               <a href="{{route('chitietphim',$item->slug)}}">
+                  <figure class="card-banner">
+                     <img src="{{asset('/uploads/anhphim/'.$item->hinhanh)}}" alt="{{$item->tieude}}">
+                  </figure>
+               </a>
+               <div class="title-wrapper">
+                  <a href="{{route('chitietphim',$item->slug)}}">
+                     <h3 class="card-title">{{$item->tieude}}</h3>
+                  </a>
+                  <time datetime="{{$item->namphim}}">{{$item->namphim}}</time>
+               </div>
+               <div class="card-meta">
+                  <div class="badge badge-outline">
+                     @if ($item->chatluong==0)
+                     HD
+                  @elseif($item->chatluong==1)
+                     2K
+                  @elseif($item->chatluong==2)
+                     4K
+                  @endif
                    </div>
-                   <div class="rating">
-                      <ion-icon name="star"></ion-icon>
-                      <data>8.5</data>
-                   </div>
-                </div>
-             </div>
-          </li>
-          <li>
-             <div class="movie-card">
-                <a href="">
-                   <figure class="card-banner">
-                      <img src="/assets/images/upcoming-1.png" alt="The Northman movie poster">
-                   </figure>
-                </a>
-                <div class="title-wrapper">
-                   <a href="/movie-details.html">
-                      <h3 class="card-title">The Northman</h3>
-                   </a>
-                   <time datetime="2022">2022</time>
-                </div>
-                <div class="card-meta">
-                   <div class="badge badge-outline">HD</div>
-                   <div class="duration">
-                      <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="PT137M">137 min</time>
-                   </div>
-                   <div class="rating">
-                      <ion-icon name="star"></ion-icon>
-                      <data>8.5</data>
-                   </div>
-                </div>
-             </div>
-          </li>
-          <li>
-             <div class="movie-card">
-                <a href="/movie-details.html">
-                   <figure class="card-banner">
-                      <img src="/assets/images/upcoming-2.png"
-                         alt="Doctor Strange in the Multiverse of Madness movie poster">
-                   </figure>
-                </a>
-                <div class="title-wrapper">
-                   <a href="/movie-details.html">
-                      <h3 class="card-title">Doctor Strange in the Multiverse of Madness</h3>
-                   </a>
-                   <time datetime="2022">2022</time>
-                </div>
-                <div class="card-meta">
-                   <div class="badge badge-outline">4K</div>
-                   <div class="duration">
-                      <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="PT126M">126 min</time>
-                   </div>
-                   <div class="rating">
-                      <ion-icon name="star"></ion-icon>
-                      <data>NR</data>
-                   </div>
-                </div>
-             </div>
-          </li>
-          <li>
-             <div class="movie-card">
-                <a href="/movie-details.html">
-                   <figure class="card-banner">
-                      <img src="/assets/images/upcoming-3.png" alt="Memory movie poster">
-                   </figure>
-                </a>
-                <div class="title-wrapper">
-                   <a href="/movie-details.html">
-                      <h3 class="card-title">Memory</h3>
-                   </a>
-                   <time datetime="2022">2022</time>
-                </div>
-                <div class="card-meta">
-                   <div class="badge badge-outline">2K</div>
-                   <div class="duration">
-                      <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="">N/A</time>
-                   </div>
-                   <div class="rating">
-                      <ion-icon name="star"></ion-icon>
-                      <data>NR</data>
-                   </div>
-                </div>
-             </div>
-          </li>
-          <li>
-             <div class="movie-card">
-                <a href="/movie-details.html">
-                   <figure class="card-banner">
-                      <img src="/assets/images/upcoming-4.png"
-                         alt="The Unbearable Weight of Massive Talent movie poster">
-                   </figure>
-                </a>
-                <div class="title-wrapper">
-                   <a href="/movie-details.html">
-                      <h3 class="card-title">The Unbearable Weight of Massive Talent</h3>
-                   </a>
-                   <time datetime="2022">2022</time>
-                </div>
-                <div class="card-meta">
-                   <div class="badge badge-outline">HD</div>
-                   <div class="duration">
-                      <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="PT107M">107 min</time>
-                   </div>
-                   <div class="rating">
-                      <ion-icon name="star"></ion-icon>
-                      <data>NR</data>
-                   </div>
-                </div>
-             </div>
-          </li>
+                  <div class="duration">
+                     <ion-icon name="time-outline"></ion-icon>
+                     <time datetime="PT{{$item->thoiluong}}M">{{$item->thoiluong}} min</time>
+                  </div>
+                  <div class="rating">
+                     <ion-icon name="star"></ion-icon>
+                     <data>{{$item->tbdanhgia}}</data>
+                  </div>
+               </div>
+            </div>
+         </li>
+         @endforeach
+         @endif
+         
        </ul>
     </div>
  </section>
@@ -250,383 +142,139 @@
     <div class="container">
        <p class="section-subtitle">Bảng Xếp Hạng</p>
        <h2 class="h2 section-title">Top Phim</h2>
-       {{-- <ul class="filter-list nav nav-pills mb-3" id="pills-tab" role="tablist">
-          <li>
-             <button class="filter-btn">Movies</button>
-          </li>
-          <li>
-             <button class="filter-btn">TV Shows</button>
-          </li>
-          <li>
-             <button class="filter-btn">Documentary</button>
-          </li>
-          <li>
-             <button class="filter-btn">Sports</button>
-          </li>
-       </ul>
-       <ul class="movies-list">
-          <li>
-             <div class="movie-card">
-                <a href="/movie-details.html">
-                   <figure class="card-banner">
-                      <img src="/assets/images/movie-1.png" alt="Sonic the Hedgehog 2 movie poster">
-                   </figure>
-                </a>
-                <div class="title-wrapper">
-                   <a href="/movie-details.html">
-                      <h3 class="card-title">Sonic the Hedgehog 2</h3>
-                   </a>
-                   <time datetime="2022">2022</time>
-                </div>
-                <div class="card-meta">
-                   <div class="badge badge-outline">2K</div>
-                   <div class="duration">
-                      <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="PT122M">122 min</time>
-                   </div>
-                   <div class="rating">
-                      <ion-icon name="star"></ion-icon>
-                      <data>7.8</data>
-                   </div>
-                </div>
-             </div>
-          </li>
-          <li>
-             <div class="movie-card">
-                <a href="/movie-details.html">
-                   <figure class="card-banner">
-                      <img src="/assets/images/movie-2.png" alt="Morbius movie poster">
-                   </figure>
-                </a>
-                <div class="title-wrapper">
-                   <a href="/movie-details.html">
-                      <h3 class="card-title">Morbius</h3>
-                   </a>
-                   <time datetime="2022">2022</time>
-                </div>
-                <div class="card-meta">
-                   <div class="badge badge-outline">HD</div>
-                   <div class="duration">
-                      <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="PT104M">104 min</time>
-                   </div>
-                   <div class="rating">
-                      <ion-icon name="star"></ion-icon>
-                      <data>5.9</data>
-                   </div>
-                </div>
-             </div>
-          </li>
-          <li>
-             <div class="movie-card">
-                <a href="/movie-details.html">
-                   <figure class="card-banner">
-                      <img src="/assets/images/movie-3.png" alt="The Adam Project movie poster">
-                   </figure>
-                </a>
-                <div class="title-wrapper">
-                   <a href="/movie-details.html">
-                      <h3 class="card-title">The Adam Project</h3>
-                   </a>
-                   <time datetime="2022">2022</time>
-                </div>
-                <div class="card-meta">
-                   <div class="badge badge-outline">4K</div>
-                   <div class="duration">
-                      <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="PT106M">106 min</time>
-                   </div>
-                   <div class="rating">
-                      <ion-icon name="star"></ion-icon>
-                      <data>7.0</data>
-                   </div>
-                </div>
-             </div>
-          </li>
-          <li>
-             <div class="movie-card">
-                <a href="/movie-details.html">
-                   <figure class="card-banner">
-                      <img src="/assets/images/movie-4.png" alt="Free Guy movie poster">
-                   </figure>
-                </a>
-                <div class="title-wrapper">
-                   <a href="/movie-details.html">
-                      <h3 class="card-title">Free Guy</h3>
-                   </a>
-                   <time datetime="2021">2021</time>
-                </div>
-                <div class="card-meta">
-                   <div class="badge badge-outline">4K</div>
-                   <div class="duration">
-                      <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="PT115M">115 min</time>
-                   </div>
-                   <div class="rating">
-                      <ion-icon name="star"></ion-icon>
-                      <data>7.7</data>
-                   </div>
-                </div>
-             </div>
-          </li>
-       </ul> --}}
 
        <ul class=" nav nav-pills mb-3 filter-list" id="pills-tab" role="tablist">
          <li class="nav-item">
-           <a class="nav-link active filter-btn" id="pills-home-tab" data-toggle="pill" href="#ngay" role="tab" aria-controls="pills-home" aria-selected="true">Top Sao</a>
+           <a class="nav-link active filter-btn" id="pills-home-tab" data-toggle="pill" href="#sao" role="tab" aria-controls="pills-home" aria-selected="true">Top Sao</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link filter-btn" id="pills-profile-tab" data-toggle="pill" href="#tuan" role="tab" aria-controls="pills-profile" aria-selected="false">Top Bình Luận</a>
+           <a class="nav-link filter-btn" id="pills-profile-tab" data-toggle="pill" href="#binhluan1" role="tab" aria-controls="pills-profile" aria-selected="false">Top Bình Luận</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link filter-btn" id="pills-contact-tab" data-toggle="pill" href="#thang" role="tab" aria-controls="pills-contact" aria-selected="false">Top Quan Tâm</a>
+           <a class="nav-link filter-btn" id="pills-contact-tab" data-toggle="pill" href="#yeuthich" role="tab" aria-controls="pills-contact" aria-selected="false">Top Yêu Thích</a>
          </li>
        </ul>
        <div class="tab-content" id="pills-tabContent">
-         <div class="tab-pane fade show active" id="ngay" role="tabpanel" aria-labelledby="pills-home-tab">
+         <div class="tab-pane fade show active" id="sao" role="tabpanel" aria-labelledby="pills-home-tab">
             <ul class="movies-list">
+               @foreach ($phimtopsao as $key => $item)
+                   
                <li>
                   <div class="movie-card">
-                     <a href="/movie-details.html">
+                     <a href="{{route('chitietphim',$item->slug)}}">
                         <figure class="card-banner">
-                           <img src="/assets/images/movie-1.png" alt="Sonic the Hedgehog 2 movie poster">
+                           <img src="{{asset('uploads/anhphim/'.$item->hinhanh)}}" alt="{{$item->tieude}}">
                         </figure>
                      </a>
                      <div class="title-wrapper">
-                        <a href="/movie-details.html">
-                           <h3 class="card-title">Sonic the Hedgehog 2</h3>
+                        <a href="{{route('chitietphim',$item->slug)}}">
+                           <h3 class="card-title">{{$item->tieude}}</h3>
                         </a>
-                        <time datetime="2022">2022</time>
+                        <time datetime="{{$item->namphim}}">{{$item->namphim}}</time>
                      </div>
                      <div class="card-meta">
-                        <div class="badge badge-outline">2K</div>
+                        <div class="badge badge-outline">
+                          @if ($item->chatluong==0)
+                          HD
+                       @elseif($item->chatluong==1)
+                          2K
+                       @elseif($item->chatluong==2)
+                          4K
+                       @endif
+                        </div>
                         <div class="duration">
                            <ion-icon name="time-outline"></ion-icon>
-                           <time datetime="PT122M">122 min</time>
+                           <time datetime="PT{{$item->thoiluong}}M">{{$item->thoiluong}} min</time>
                         </div>
                         <div class="rating">
                            <ion-icon name="star"></ion-icon>
-                           <data>7.8</data>
+                           <data>{{$item->tbdanhgia}}</data>
                         </div>
                      </div>
                   </div>
                </li>
-               <li>
-                  <div class="movie-card">
-                     <a href="/movie-details.html">
-                        <figure class="card-banner">
-                           <img src="/assets/images/movie-2.png" alt="Morbius movie poster">
-                        </figure>
-                     </a>
-                     <div class="title-wrapper">
-                        <a href="/movie-details.html">
-                           <h3 class="card-title">Morbius</h3>
-                        </a>
-                        <time datetime="2022">2022</time>
-                     </div>
-                     <div class="card-meta">
-                        <div class="badge badge-outline">HD</div>
-                        <div class="duration">
-                           <ion-icon name="time-outline"></ion-icon>
-                           <time datetime="PT104M">104 min</time>
-                        </div>
-                        <div class="rating">
-                           <ion-icon name="star"></ion-icon>
-                           <data>5.9</data>
-                        </div>
-                     </div>
-                  </div>
-               </li>
-               <li>
-                  <div class="movie-card">
-                     <a href="/movie-details.html">
-                        <figure class="card-banner">
-                           <img src="/assets/images/movie-3.png" alt="The Adam Project movie poster">
-                        </figure>
-                     </a>
-                     <div class="title-wrapper">
-                        <a href="/movie-details.html">
-                           <h3 class="card-title">The Adam Project</h3>
-                        </a>
-                        <time datetime="2022">2022</time>
-                     </div>
-                     <div class="card-meta">
-                        <div class="badge badge-outline">4K</div>
-                        <div class="duration">
-                           <ion-icon name="time-outline"></ion-icon>
-                           <time datetime="PT106M">106 min</time>
-                        </div>
-                        <div class="rating">
-                           <ion-icon name="star"></ion-icon>
-                           <data>7.0</data>
-                        </div>
-                     </div>
-                  </div>
-               </li>
-               <li>
-                  <div class="movie-card">
-                     <a href="/movie-details.html">
-                        <figure class="card-banner">
-                           <img src="/assets/images/movie-4.png" alt="Free Guy movie poster">
-                        </figure>
-                     </a>
-                     <div class="title-wrapper">
-                        <a href="/movie-details.html">
-                           <h3 class="card-title">Free Guy</h3>
-                        </a>
-                        <time datetime="2021">2021</time>
-                     </div>
-                     <div class="card-meta">
-                        <div class="badge badge-outline">4K</div>
-                        <div class="duration">
-                           <ion-icon name="time-outline"></ion-icon>
-                           <time datetime="PT115M">115 min</time>
-                        </div>
-                        <div class="rating">
-                           <ion-icon name="star"></ion-icon>
-                           <data>7.7</data>
-                        </div>
-                     </div>
-                  </div>
-               </li>
+               @endforeach
             </ul>
          </div>
-         <div class="tab-pane fade" id="tuan" role="tabpanel" aria-labelledby="pills-profile-tab">
+         <div class="tab-pane fade" id="binhluan1" role="tabpanel" aria-labelledby="pills-profile-tab">
             <ul class="movies-list">
+               @foreach ($phimtopbinhluan as $key => $item1)  
                <li>
                   <div class="movie-card">
-                     <a href="/movie-details.html">
+                     <a href="{{route('chitietphim',$item1->slug)}}">
                         <figure class="card-banner">
-                           <img src="/assets/images/movie-1.png" alt="Sonic the Hedgehog 2 movie poster">
+                           <img src="{{asset('uploads/anhphim/'.$item1->hinhanh)}}" alt="{{$item1->tieude}}">
                         </figure>
                      </a>
                      <div class="title-wrapper">
-                        <a href="/movie-details.html">
-                           <h3 class="card-title">Sonic the Hedgehog 2</h3>
+                        <a href="{{route('chitietphim',$item1->slug)}}">
+                           <h3 class="card-title">{{$item1->tieude}}</h3>
                         </a>
-                        <time datetime="2022">2022</time>
+                        <time datetime="{{$item1->namphim}}">{{$item1->namphim}}</time>
                      </div>
                      <div class="card-meta">
-                        <div class="badge badge-outline">2K</div>
+                        <div class="badge badge-outline">
+                          @if ($item1->chatluong==0)
+                          HD
+                       @elseif($item1->chatluong==1)
+                          2K
+                       @elseif($item1->chatluong==2)
+                          4K
+                       @endif
+                        </div>
                         <div class="duration">
                            <ion-icon name="time-outline"></ion-icon>
-                           <time datetime="PT122M">122 min</time>
+                           <time datetime="PT{{$item1->thoiluong}}M">{{$item1->thoiluong}} min</time>
                         </div>
                         <div class="rating">
-                           <ion-icon name="star"></ion-icon>
-                           <data>7.8</data>
+                           <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                           <data>{{round($item1->binhluan_count)}}</data>
                         </div>
                      </div>
                   </div>
                </li>
-               <li>
-                  <div class="movie-card">
-                     <a href="/movie-details.html">
-                        <figure class="card-banner">
-                           <img src="/assets/images/movie-2.png" alt="Morbius movie poster">
-                        </figure>
-                     </a>
-                     <div class="title-wrapper">
-                        <a href="/movie-details.html">
-                           <h3 class="card-title">Morbius</h3>
-                        </a>
-                        <time datetime="2022">2022</time>
-                     </div>
-                     <div class="card-meta">
-                        <div class="badge badge-outline">HD</div>
-                        <div class="duration">
-                           <ion-icon name="time-outline"></ion-icon>
-                           <time datetime="PT104M">104 min</time>
-                        </div>
-                        <div class="rating">
-                           <ion-icon name="star"></ion-icon>
-                           <data>5.9</data>
-                        </div>
-                     </div>
-                  </div>
-               </li>
-               <li>
-                  <div class="movie-card">
-                     <a href="/movie-details.html">
-                        <figure class="card-banner">
-                           <img src="/assets/images/movie-3.png" alt="The Adam Project movie poster">
-                        </figure>
-                     </a>
-                     <div class="title-wrapper">
-                        <a href="/movie-details.html">
-                           <h3 class="card-title">The Adam Project</h3>
-                        </a>
-                        <time datetime="2022">2022</time>
-                     </div>
-                     <div class="card-meta">
-                        <div class="badge badge-outline">4K</div>
-                        <div class="duration">
-                           <ion-icon name="time-outline"></ion-icon>
-                           <time datetime="PT106M">106 min</time>
-                        </div>
-                        <div class="rating">
-                           <ion-icon name="star"></ion-icon>
-                           <data>7.0</data>
-                        </div>
-                     </div>
-                  </div>
-               </li>
+               @endforeach
             </ul>
          </div>
-         <div class="tab-pane fade" id="thang" role="tabpanel" aria-labelledby="pills-contact-tab">
+         <div class="tab-pane fade" id="yeuthich" role="tabpanel" aria-labelledby="pills-contact-tab">
             <ul class="movies-list">
+               @foreach ($phimtopyeuthich as $key => $item)
+                   
                <li>
                   <div class="movie-card">
-                     <a href="/movie-details.html">
+                     <a href="{{route('chitietphim',$item->slug)}}">
                         <figure class="card-banner">
-                           <img src="/assets/images/movie-1.png" alt="Sonic the Hedgehog 2 movie poster">
+                           <img src="{{asset('uploads/anhphim/'.$item->hinhanh)}}" alt="{{$item->tieude}}">
                         </figure>
                      </a>
                      <div class="title-wrapper">
-                        <a href="/movie-details.html">
-                           <h3 class="card-title">Sonic the Hedgehog 2</h3>
+                        <a href="{{route('chitietphim',$item->slug)}}">
+                           <h3 class="card-title">{{$item->tieude}}</h3>
                         </a>
-                        <time datetime="2022">2022</time>
+                        <time datetime="{{$item->namphim}}">{{$item->namphim}}</time>
                      </div>
                      <div class="card-meta">
-                        <div class="badge badge-outline">2K</div>
+                        <div class="badge badge-outline">
+                          @if ($item->chatluong==0)
+                          HD
+                       @elseif($item->chatluong==1)
+                          2K
+                       @elseif($item->chatluong==2)
+                          4K
+                       @endif
+                        </div>
                         <div class="duration">
                            <ion-icon name="time-outline"></ion-icon>
-                           <time datetime="PT122M">122 min</time>
+                           <time datetime="PT{{$item->thoiluong}}M">{{$item->thoiluong}} min</time>
                         </div>
                         <div class="rating">
-                           <ion-icon name="star"></ion-icon>
-                           <data>7.8</data>
+                           <ion-icon name="heart-circle-outline"></ion-icon>
+                           <data>{{round($item->yeuthich_count)}}</data>
                         </div>
                      </div>
                   </div>
                </li>
-               <li>
-                  <div class="movie-card">
-                     <a href="/movie-details.html">
-                        <figure class="card-banner">
-                           <img src="/assets/images/movie-2.png" alt="Morbius movie poster">
-                        </figure>
-                     </a>
-                     <div class="title-wrapper">
-                        <a href="/movie-details.html">
-                           <h3 class="card-title">Morbius</h3>
-                        </a>
-                        <time datetime="2022">2022</time>
-                     </div>
-                     <div class="card-meta">
-                        <div class="badge badge-outline">HD</div>
-                        <div class="duration">
-                           <ion-icon name="time-outline"></ion-icon>
-                           <time datetime="PT104M">104 min</time>
-                        </div>
-                        <div class="rating">
-                           <ion-icon name="star"></ion-icon>
-                           <data>5.9</data>
-                        </div>
-                     </div>
-                  </div>
-               </li>
+               @endforeach
             </ul>
          </div>
        </div>

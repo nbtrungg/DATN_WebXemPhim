@@ -71,6 +71,12 @@
                 <p>Tập Phim</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{route('goi-dich-vu.create')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Gói Dịch Vụ</p>
+              </a>
+            </li>
           </ul>
         </li>
       </ul>

@@ -8,19 +8,25 @@
       </a>
 
       <div class="header-actions">
-
+        <div class="">
+          <form action="{{route('timkiem')}}" method="GET">
+          <input type="text" style="max-width: 200px;" name="search" id="timkiem" class="form-control">
+          <ul class="form-control" id="result" style="max-width: 200px; display:none;">
+          </ul>
+        </div>
         <button class="search-btn">
           <ion-icon name="search-outline"></ion-icon>
         </button>
-
+        {{-- @csrf --}}
+      </form>
         {{-- <button class="btn btn-primary">Sign in</button> --}}
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             {{$user->name}}
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="{{route('lichsuxemphim')}}">Lịch Sử Xem Phim</a></li>
+            <li><a class="dropdown-item" href="{{route('danhsachyeuthich')}}">Danh Sách Yêu Thích</a></li>
             <li><a class="dropdown-item" href="{{route('logout_user')}}">Đăng Xuất</a></li>
           </ul>
         </div>
@@ -97,9 +103,9 @@
             <a href="/index.html" class="navbar-link">Phim Bộ</a>
           </li> --}}
 
-          <li>
+          {{-- <li>
             <a href="/index.html" class="navbar-link">Lọc Phim</a>
-          </li>
+          </li> --}}
         </ul>
 
         <ul class="navbar-social-list">

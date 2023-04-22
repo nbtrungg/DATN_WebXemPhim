@@ -13,8 +13,8 @@
 </style>
 <section class="top-rated">
     <div class="container" style="margin-top: 80px">
-      <h2 class="h2 section-title" style="margin-bottom: 10px;">{{$danhmuc_slug->tieude}}</h2>
-      <p class="section-subtitle" style="margin-bottom: 50px;">{{$danhmuc_slug->mota}}</p>
+      <h2 class="h2 section-title" style="margin-bottom: 10px;">Phim Yêu Thích</h2>
+      <p class="section-subtitle" style="margin-bottom: 50px;">Danh Sách Những Bộ Phim Bạn Đã Yêu Thích</p>
        <ul class="movies-list">
          @foreach ($phim as $key=>$item)
           <li>

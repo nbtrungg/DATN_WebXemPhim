@@ -116,7 +116,7 @@
                         <td>
                           <div class="row">
 
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['quoc-gia.destroy',$item->id],'id'=> $item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletequocgia']) !!}
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['quoc-gia.destroy',$item->id],'id'=> 'quocgia'.$item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletequocgia']) !!}
                             {!! Form::submit('Xóa', ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
                             <a href="{{route('quoc-gia.edit',$item->id)}}" class="btn btn-warning">Sửa</a>

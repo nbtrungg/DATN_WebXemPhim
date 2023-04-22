@@ -395,6 +395,8 @@ body.active { overflow: hidden; }
   padding-block: 25px;
   transition: var(--transition-2);
   z-index: 4;
+  height: 85px; /* thay đổi giá trị này để đáp ứng yêu cầu của bạn */
+  margin-bottom: -85px;
 }
 
 .header.active {
@@ -405,7 +407,7 @@ body.active { overflow: hidden; }
 .header .container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .header-actions { display: none; }
@@ -1011,10 +1013,9 @@ body.active { overflow: hidden; }
 
 .details-actions {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 20px 40px;
-  max-width: 460px;
+  max-width: 520px;
   background: var(--gunmetal-2);
   padding: 25px;
   border: 1px solid var(--jet);
@@ -1209,7 +1210,8 @@ body.active { overflow: hidden; }
   .header-actions {
     display: flex;
     margin-left: auto;
-    align-items: center;
+    padding: 20px 0;
+    align-items: baseline;
     gap: 35px;
   }
 

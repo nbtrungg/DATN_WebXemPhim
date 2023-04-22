@@ -61,7 +61,7 @@
                 {!! Form::select('chonphim',[''=>'Chọn Phim','Phim gần nhất'=>$listphim], isset($edittapphim) ? $edittapphim->phim_id : '', ['id' => 'chonphim', 'class' => 'form-control', 'required' => 'required']) !!}
                 <small class="text-danger">{{ $errors->first('chonphim') }}</small>
                 </div>
-                <div class="form-group{{ $errors->has('uploadphim') ? ' has-error' : '' }}">
+                {{-- <div class="form-group{{ $errors->has('uploadphim') ? ' has-error' : '' }}">
                   {!! Form::label('uploadphim', 'Tải Phim Lên') !!}
                   {!! Form::file('uploadphim', ['class' => 'form-control-file', isset($edittapphim) ? '' : 'required' => 'required']) !!}
                   <small class="text-danger">{{ $errors->first('uploadphim') }}</small>
@@ -70,6 +70,11 @@
                     <source src="{{asset('uploads/phim/'.$edittapphim->linkphim)}}">
                   </video>
                   @endif
+                  </div> --}}
+                  <div class="form-group{{ $errors->has('linkphim') ? ' has-error' : '' }}">
+                  {!! Form::label('linkphim', 'Link Phim') !!}
+                  {!! Form::text('linkphim', isset($edittapphim) ? $edittapphim->linkphim : '', ['class' => 'form-control', 'required' => 'required']) !!}
+                  <small class="text-danger">{{ $errors->first('linkphim') }}</small>
                   </div>
                   <div class="form-group{{ $errors->has('chontap') ? ' has-error' : '' }}">
                     {!! Form::label('chontap', 'Chọn Tập') !!}
@@ -124,7 +129,7 @@
                         <td>
                           <div class="row">
 
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['tap-phim.destroy',$item->id],'id'=> $item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletetapphim']) !!}
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['tap-phim.destroy',$item->id],'id'=> 'tapphim'.$item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletetapphim']) !!}
                             {!! Form::submit('Xóa', ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
                             <a href="{{route('tap-phim.edit',$item->id)}}" class="btn btn-warning">Sửa</a>

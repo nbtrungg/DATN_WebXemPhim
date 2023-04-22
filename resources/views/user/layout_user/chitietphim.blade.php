@@ -11,6 +11,17 @@
       color: #110f1a;
       border-color:white black;
    }
+   .yeuthichphim:hover{
+      /* background: #e2d703; */
+      color: #e2d703;
+      border-color:#e2d703 !important;
+   }
+   .huyyeuthich:hover{
+      /* background: #e2d703; */
+      color: #e2d703 !important;
+      border-color:#e2d703 !important;
+      background: hsl(216, 22%, 18%) !important;
+   }
 </style>
 <!-- 
    - #MOVIE DETAIL
@@ -80,24 +91,56 @@
           <p class="storyline">
              {{$chitietphim->mota}}
           </p>
-          <div class="details-actions">
-             <button class="share">
-                <ion-icon name="share-social"></ion-icon>
-                <span>Share</span>
-             </button>
-             <div class="title-wrapper">
-                <p class="title">Prime Video</p>
-                <p class="text">Streaming Channels</p>
-             </div>
-             <button class="btn btn-primary">
-                <ion-icon name="play"></ion-icon>
-                <span>Watch Now</span>
-             </button>
+         <div class="details-actions">
+            <p style="" class="section-subtitle">Đánh Giá Phim</p>
+
+            <ul class="list-inline" style="display: flex;" title="Average Rating">
+
+               @for($count=1; $count<=5; $count++)
+
+               @php
+
+                  if($count<=$rating){ 
+                     $color = 'color:#ffcc00;'; //mau vang
+                  }
+                  else {
+                     $color = 'color:#ccc;'; //mau xam
+                  }
+               
+               @endphp
+               
+               <li title="star_rating" 
+
+               id="{{$chitietphim->id}}-{{$count}}" 
+               
+               data-index="{{$count}}"  
+               data-movie_id="{{$chitietphim->id}}" 
+
+               data-rating="{{$rating}}" 
+               class="rating" 
+               style="cursor:pointer; {{$color}} 
+
+               font-size:30px;">&#9733;</li>
+
+               @endfor
+
+            </ul>
+            <p style="" class="section-subtitle">{{$rating}}<i class="rating__icon rating__icon--star fa fa-star"></i> / {{$luotdanhgia}} Lượt Đánh Giá </p>
+         </div>
+          <div class="yeuthich" id="yeuthich">
+
+             @if ($yeuthich_check>0)
+             <a class="download-btn huyyeuthich" data-phim_id="{{$chitietphim->id}}" style="color:hsl(216, 22%, 18%); cursor: pointer; background:#e2d703;border: 1px solid var(--jet);">
+                <span>ĐÃ THÍCH</span>
+                <ion-icon name="heart-circle-outline"></ion-icon>
+             </a>
+             @else
+             <a class="download-btn yeuthichphim" data-phim_id="{{$chitietphim->id}}" style="color:#e2d703; cursor: pointer; background:hsl(216, 22%, 18%);border: 1px solid var(--jet);">
+                <span>YÊU THÍCH</span>
+                <ion-icon name="heart-circle-outline"></ion-icon>
+             </a>
+             @endif
           </div>
-          <a href="/assets/images/movie-4.png" download class="download-btn">
-             <span>Download</span>
-             <ion-icon name="download-outline"></ion-icon>
-          </a>
        </div>
     </div>
  </section>
@@ -240,7 +283,7 @@
    <div class="container">   
       <div class="flex-wrapper">
          <div class="title-wrapper">
-            <p style="color: black" class="section-subtitle">Bạn Có Thể Đánh Giá Phim Ở Đây</p>
+            <p style="color: black" class="section-subtitle">Bạn Có Thể Bình Luận Phim Ở Đây</p>
             <h2 class="h2 section-title">Bình Luận</h2>
          </div>
       </div>
@@ -323,17 +366,25 @@
                    <a href="{{route('chitietphim',$item->slug)}}">
                       <h3 class="card-title">{{$item->tieude}}</h3>
                    </a>
-                   <time datetime="2022">2022</time>
-                </div>
+                   <time datetime="{{$item->namphim}}">{{$item->namphim}}</time>
+                  </div>
                 <div class="card-meta">
-                   <div class="badge badge-outline">2K</div>
-                   <div class="duration">
-                      <ion-icon name="time-outline"></ion-icon>
-                      <time datetime="PT47M">47 min</time>
+                  <div class="badge badge-outline">
+                     @if ($item->chatluong==0)
+                     HD
+                  @elseif($item->chatluong==1)
+                     2K
+                  @elseif($item->chatluong==2)
+                     4K
+                  @endif
                    </div>
+                  <div class="duration">
+                      <ion-icon name="time-outline"></ion-icon>
+                      <time datetime="PT{{$item->thoiluong}}M">{{$item->thoiluong}} min</time>
+                     </div>
                    <div class="rating">
                       <ion-icon name="star"></ion-icon>
-                      <data>8.6</data>
+                      <data>{{$item->tbdanhgia}}</data>
                    </div>
                 </div>
              </div>

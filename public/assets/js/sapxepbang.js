@@ -80,3 +80,31 @@ $('#sapxepbang_quocgia').sortable({
         })
     }
 });
+
+$('#sapxepbang_goidichvu').sortable({
+    placeholder:'ui-state-highlight',
+    update:function(event,ui){
+        var array_id=[];
+        $('#sapxepbang_goidichvu tr').each(function(){
+            array_id.push($(this).attr('id'));
+        })
+        // alert(array_id);
+        $.ajax({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            },
+            url:"/sapxepbang-goidichvu",
+            type:"POST",
+            data:{array_id:array_id},
+            success:function(data){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Thay đổi thứ tự thành công!',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
+            }
+        })
+    }
+});

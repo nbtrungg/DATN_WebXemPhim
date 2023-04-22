@@ -21,4 +21,22 @@ class Phim extends Model
     public function tapphim(){
         return $this->hasMany(Tapphim::class);
     }
+    public function danhgia(){
+        return $this->hasMany(Danhgia::class);
+    }
+    public function tbdanhgia()
+    {
+        return $this->danhgia()->average('sao');
+    }
+    public function binhluan()
+    {
+        return $this->hasMany(Binhluan::class);
+    }
+    public function yeuthich(){
+        return $this->hasMany(Yeuthich::class);
+    }
+    public function useryeuthich()
+    {
+        return $this->belongsToMany(User::class, 'yeuthiches', 'phim_id', 'user_id');
+    }
 }

@@ -21,7 +21,7 @@ $(".deletequocgia").on("click", function () {
         confirmButtonText: "Đồng ý!",
     }).then((result) => {
         if (result.isConfirmed) {
-            $('#'+id).submit();
+            $('#quocgia'+id).submit();
         }
     });
 });

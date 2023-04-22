@@ -5,12 +5,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name='csrf-token' content="{{csrf_token()}}">
+
   <title>Đăng Nhập</title>
 
- {{-- jqueryvalidate --}}
+  {{-- jqueryvalidate --}}
+  {{-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script> --}}
+ {{-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script> --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
   <script src="\assets\js\login_user_validate.js"></script>
+
   <!-- 
     - favicon
   -->
@@ -55,7 +60,32 @@
   <!-- 
     - #HEADER
   -->
-
+  @if(Session::has('error'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function (event) {
+                Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: '{{Session::get('error')}}',
+                showConfirmButton: false,
+                timer: 1500
+                })
+            })
+        </script>
+        @endif
+        @if(Session::has('success'))
+            <script>
+                document.addEventListener("DOMContentLoaded", function (event) {
+                    Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '{{Session::get('success')}}',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
+                })
+            </script>
+        @endif
   <header class="header" data-header>
     <div class="container">
 
@@ -264,7 +294,8 @@
       </form>
     </div>
     <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-      <form>
+      <form id="dk_user" action="{{route('post_dangky_user')}}" method="post">
+        @csrf
         <div class="text-center mb-3">
           <p>Sign up with:</p>
           <button  type="button" class="btn btn-link btn-floating mx-1">
@@ -288,42 +319,36 @@
   
         <!-- Name input -->
         <div class="form-outline mb-4">
-          <input style="color: white" type="text" id="registerName" class="form-control" />
-          <label style="color: white" class="form-label" for="registerName">Name</label>
-        </div>
-  
-        <!-- Username input -->
-        <div class="form-outline mb-4">
-          <input style="color: white" type="text" id="registerUsername" class="form-control" />
-          <label style="color: white" class="form-label" for="registerUsername">Username</label>
+          <input style="color: white" name="name" type="text" id="registerName" class="form-control" />
+          <label style="color: white" class="form-label" for="registerName">Họ Và Tên</label>
         </div>
   
         <!-- Email input -->
         <div class="form-outline mb-4">
-          <input style="color: white" type="email" id="registerEmail" class="form-control" />
+          <input style="color: white" name="email_dk" type="email" id="registerEmail" class="form-control" />
           <label style="color: white" class="form-label" for="registerEmail">Email</label>
         </div>
   
         <!-- Password input -->
         <div class="form-outline mb-4">
-          <input style="color: white" type="password" id="registerPassword" class="form-control" />
-          <label style="color: white" class="form-label" for="registerPassword">Password</label>
+          <input style="color: white" name="pass_dk" type="password" id="registerPassword" class="form-control" />
+          <label style="color: white" class="form-label" for="registerPassword">Mật Khẩu</label>
         </div>
   
         <!-- Repeat Password input -->
         <div class="form-outline mb-4">
-          <input style="color: white" type="password" id="registerRepeatPassword" class="form-control" />
-          <label style="color: white" class="form-label" for="registerRepeatPassword">Repeat password</label>
+          <input style="color: white" name="cfpass" type="password" id="registerRepeatPassword" class="form-control" />
+          <label style="color: white" class="form-label" for="registerRepeatPassword">Nhập Lại Mật Khẩu</label>
         </div>
   
         <!-- Checkbox -->
-        <div class="form-check d-flex justify-content-center mb-4">
+        {{-- <div class="form-check d-flex justify-content-center mb-4">
           <input style="color: white" class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
             aria-describedby="registerCheckHelpText" />
           <label style="color: white" class="form-check-label" for="registerCheck">
             I have read and agree to the terms
           </label>
-        </div>
+        </div> --}}
   
         <!-- Submit button -->
         <button style="background: yellow; color:black" type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
@@ -469,6 +494,7 @@
 
 
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- 
     - custom js link

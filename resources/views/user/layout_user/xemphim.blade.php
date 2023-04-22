@@ -12,10 +12,13 @@
          </figure>
          <div class="movie-detail-content">
             <p class="detail-subtitle">Bạn Đang Xem:</p>
-            <h1 class="h1 detail-title">
-               {{$chitietphim->tieude}}
-               {{-- <strong>Guy</strong> --}}
-            </h1>
+            <a href="{{route('chitietphim',$chitietphim->slug)}}">
+
+               <h1 class="h1 detail-title">
+                  {{$chitietphim->tieude}}
+                  {{-- <strong>Guy</strong> --}}
+               </h1>
+            </a>
             <div class="meta-wrapper">
                <div class="badge-wrapper">
                   {{-- <div class="badge badge-fill">PG 13</div> --}}
@@ -95,9 +98,10 @@
        <!-- <iframe width="100%" height="600" src="https://youtu.be/EBU0K74TC-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
        {{-- <iframe  width="100%" height="700" src="https://www.youtube.com/embed/EBU0K74TC-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> --}}
          
-         <video width="100%" height="600" controls>
+         {{-- <video width="100%" height="600" controls>
             <source src="{{asset('/uploads/phim/'.$tapphim->linkphim)}}">
-          </video>
+          </video> --}}
+          <iframe  width="100%" height="600" src="{{$tapphim->linkphim}}" frameborder="0" allow="autostop" allowfullscreen></iframe>
          
       </div>
     <div class="container" style="margin-top: 20px;">

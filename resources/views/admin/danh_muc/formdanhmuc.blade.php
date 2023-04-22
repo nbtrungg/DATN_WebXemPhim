@@ -116,7 +116,7 @@
                         <td>
                           <div class="row">
 
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['danh-muc.destroy',$item->id],'id'=> $item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletedanhmuc']) !!}
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['danh-muc.destroy',$item->id],'id'=> 'danhmuc'.$item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletedanhmuc']) !!}
                             {!! Form::submit('Xóa', ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
                             <a href="{{route('danh-muc.edit',$item->id)}}" class="btn btn-warning">Sửa</a>

@@ -47,7 +47,7 @@
                    </div>
                    <div class="rating">
                       <ion-icon name="star"></ion-icon>
-                      <data>7.8</data>
+                      <data>{{$item->tbdanhgia}}</data>
                    </div>
                 </div>
              </div>

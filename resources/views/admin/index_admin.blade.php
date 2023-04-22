@@ -73,6 +73,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/assets/js/quocgia.js"></script>
 <script src="/assets/js/phim.js"></script>
 <script src="/assets/js/tapphim.js"></script>
+<script src="/assets/js/goidichvu.js"></script>
+
 
 {{-- sắp xếp bảng --}}
 <script src="/assets/js/sapxepbang.js"></script>

@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Binhluan;
+use App\Models\Danhgia;
 use App\Models\Danhmuc;
+use App\Models\Lichsuphim;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Phim;
 use App\Models\Quocgia;
 use App\Models\Tapphim;
 use App\Models\Theloai;
+use App\Models\Yeuthich;
+use File;
 
 class PhimController extends Controller
 {
@@ -31,6 +36,11 @@ class PhimController extends Controller
         $danhmuc=Danhmuc::pluck('tieude','id');
         $theloai=Theloai::pluck('tieude','id');
         $quocgia=Quocgia::pluck('tieude','id');
+        $path=public_path()."/json_file/";
+        if(!is_dir($path)){
+            mkdir($path,0777,true);
+        }
+        File::put($path.'phim.json',json_encode($listphim));
         return view('admin.phim.formphim', compact('listphim','user','danhmuc','theloai','quocgia'));
     }
 
@@ -135,12 +145,17 @@ class PhimController extends Controller
        }
     //    else{
         $tapphim=Tapphim::whereIn('phim_id',[$phim->id])->get();
-        foreach($tapphim as $key=>$item){
-            if(isset($item->linkphim)){
-                unlink('uploads/phim/'.$item->linkphim);
-               }
-        }
+        // foreach($tapphim as $key=>$item){
+        //     if(isset($item->linkphim)){
+        //         unlink('uploads/phim/'.$item->linkphim);
+        //        }
+        // }
+
             Tapphim::whereIn('phim_id',[$phim->id])->delete();
+            Binhluan::whereIn('phim_id',[$phim->id])->delete();
+            Yeuthich::whereIn('phim_id',[$phim->id])->delete();
+            Danhgia::whereIn('phim_id',[$phim->id])->delete();
+            Lichsuphim::whereIn('phim_id',[$phim->id])->delete();
             $phim->delete();
         return redirect()->back()->with('success','Xóa thành công!');
     }

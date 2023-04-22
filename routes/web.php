@@ -6,9 +6,12 @@ use App\Http\Controllers\User\IndexController;
 //Admin Controller
 use App\Http\Controllers\Admin\PhimController;
 use App\Http\Controllers\Admin\DanhMucController;
+use App\Http\Controllers\Admin\GoiDichVuController;
 use App\Http\Controllers\Admin\QuocGiaController;
 use App\Http\Controllers\Admin\TapPhimController;
 use App\Http\Controllers\Admin\TheLoaiController;
+use App\Models\Goidichvu;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +32,10 @@ Route::get('/', function () {
 Route::get('/users/login',[LoginController::class,'getLogin'])->name('login_user');
 Route::get('/users/logout',[LoginController::class,'logout_user'])->name('logout_user');
 Route::post('/users/login',[LoginController::class,'postLogin'])->name('post_login_user');
+Route::post('/users/dangky',[LoginController::class,'postdangky'])->name('post_dangky_user');
+//check email trùng
+Route::post('/checkemail',[LoginController::class,'checkEmail']);
+
 Route:: middleware(['auth'])->group(function(){
     Route::get('/users/dangky',[LoginController::class,'getDangKy'])->name('dangky');
     Route::post('/vnpay',[LoginController::class,'vnpay'])->name('vnpay');
@@ -42,8 +49,21 @@ Route:: middleware(['auth'])->group(function(){
         Route::get('/chi-tiet-phim/{slug}',[IndexController::class,'chitietphim'])->name('chitietphim');
         Route::get('/xem-phim/{slug}/{tap}',[IndexController::class,'xemphim'])->name('xemphim');
         Route::get('/tap-phim',[IndexController::class,'tapphim'])->name('tapphim');
+        Route::get('/danh-sach-yeu-thich',[IndexController::class,'danhsachyeuthich'])->name('danhsachyeuthich');
+        Route::get('/lich-su-xem-phim',[IndexController::class,'lichsuxemphim'])->name('lichsuxemphim');
+        Route::get('/tim-kiem',[IndexController::class,'timkiem'])->name('timkiem');
+
+
         // bình luận
         Route::post('/binhluan',[IndexController::class,'binhluan']);
+        //Đánh giá sao
+        Route::post('/danhgiasao',[IndexController::class,'danhgiasao']);
+        Route::post('/yeuthich',[IndexController::class,'yeuthich']);
+        Route::post('/huyyeuthich',[IndexController::class,'huyyeuthich']);
+        
+
+
+
     });
 });
 
@@ -63,6 +83,7 @@ Route::get('/admin/logout',[LoginController::class,'logout_admin'])->name('logou
             Route::resource('quoc-gia',QuocGiaController::class);
             Route::resource('phim',PhimController::class);
             Route::resource('tap-phim',TapPhimController::class);
+            Route::resource('goi-dich-vu',GoiDichVuController::class);
             Route::get('them-tap-phim/{id}',[TapPhimController::class,'themtapphim'])->name('them-tap-phim');;
 
         });
@@ -70,6 +91,7 @@ Route::get('/admin/logout',[LoginController::class,'logout_admin'])->name('logou
         Route::post('sapxepbang-danhmuc',[DanhMucController::class,'sapxepbang']);
         Route::post('sapxepbang-theloai',[TheLoaiController::class,'sapxepbang']);
         Route::post('sapxepbang-quocgia',[QuocGiaController::class,'sapxepbang']);
+        Route::post('sapxepbang-goidichvu',[GoiDichVuController::class,'sapxepbang']);
         Route::get('/chontapphim',[TapPhimController::class,'chontapphim'])->name('chontapphim');
         
 });

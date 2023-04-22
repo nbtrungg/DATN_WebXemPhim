@@ -183,7 +183,7 @@
                         <td>
                           <div class="row">
 
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['phim.destroy',$item->id],'id'=> $item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletephim']) !!}
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['phim.destroy',$item->id],'id'=> 'phim'.$item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletephim']) !!}
                             {!! Form::submit('Xóa', ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
                             <a href="{{route('phim.edit',$item->id)}}" class="btn btn-warning">Sửa</a>
