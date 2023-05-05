@@ -71,6 +71,7 @@
       <script src="\assets\js\danhgia.js"></script>
       <script src="\assets\js\yeuthich.js"></script>
       <script src="\assets\js\timkiem.js"></script>
+      @yield('luutientrinh')
 
 
 

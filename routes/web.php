@@ -52,6 +52,8 @@ Route:: middleware(['auth'])->group(function(){
         Route::get('/danh-sach-yeu-thich',[IndexController::class,'danhsachyeuthich'])->name('danhsachyeuthich');
         Route::get('/lich-su-xem-phim',[IndexController::class,'lichsuxemphim'])->name('lichsuxemphim');
         Route::get('/tim-kiem',[IndexController::class,'timkiem'])->name('timkiem');
+        Route::post('/tim-kiem-anh',[IndexController::class,'timkiemanh'])->name('timkiemanh');
+
 
 
         // bình luận
@@ -60,9 +62,7 @@ Route:: middleware(['auth'])->group(function(){
         Route::post('/danhgiasao',[IndexController::class,'danhgiasao']);
         Route::post('/yeuthich',[IndexController::class,'yeuthich']);
         Route::post('/huyyeuthich',[IndexController::class,'huyyeuthich']);
-        
-
-
+        Route::post('/luutientrinh',[IndexController::class,'luutientrinh']);
 
     });
 });

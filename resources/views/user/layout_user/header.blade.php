@@ -1,3 +1,16 @@
+<style>
+  .input--file {
+  position: relative;
+  color: white;
+}
+
+.input--file input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+</style>
 <header class="header" data-header>
     <div class="container" style="max-width: 85%">
 
@@ -19,6 +32,27 @@
         </button>
         {{-- @csrf --}}
       </form>
+
+        <div class="">
+          <form id="formtimkiemanh" action="{{route('timkiemanh')}}" method="POST" enctype="multipart/form-data">
+          {{-- <input type="file" style="max-width: 200px;" name="searchanh" id="timkiemanh" class="form-control"> --}}
+          <div class="input--file">
+              <ion-icon name="image-sharp"></ion-icon>
+            <input id="timkiemanh" name="searchanh" type="file" accept="image/*" multiple/>
+          </div>
+        </div>
+        @csrf
+      </form>
+      <script>
+          const inputFile = document.getElementById('timkiemanh');
+          const form = document.getElementById('formtimkiemanh');
+
+          inputFile.addEventListener('change', function() {
+            form.submit();
+          });
+      </script>
+
+        
         {{-- <button class="btn btn-primary">Sign in</button> --}}
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

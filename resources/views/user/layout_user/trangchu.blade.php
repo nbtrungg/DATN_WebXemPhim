@@ -44,19 +44,124 @@
        </div>
     </div>
  </section>
+
+{{-- Phim User Thích xem khi đăng kí --}}
+@if(!empty($phim_user_theloai)&&$phim_user_theloai->count()>0)
+<section class="upcoming">
+   <div class="container">
+      <div class="flex-wrapper">
+         <div class="title-wrapper">
+            <p class="section-subtitle">Sở Thích</p>
+            <h2 class="h2 section-title">Các Thể Loại Mà Bạn Thích</h2>
+         </div>
+      </div>
+      <ul class="movies-list  has-scrollbar">
+
+        @foreach ($phim_user_theloai as $key => $item)
+        <li>
+           <div class="movie-card">
+              <a href="{{route('chitietphim',$item->slug)}}">
+                 <figure class="card-banner">
+                    <img src="{{asset('/uploads/anhphim/'.$item->hinhanh)}}" alt="{{$item->tieude}}">
+                 </figure>
+              </a>
+              <div class="title-wrapper">
+                 <a href="{{route('chitietphim',$item->slug)}}">
+                    <h3 class="card-title">{{$item->tieude}}</h3>
+                 </a>
+                 <time datetime="{{$item->namphim}}">{{$item->namphim}}</time>
+              </div>
+              <div class="card-meta">
+                 <div class="badge badge-outline">
+                    @if ($item->chatluong==0)
+                    HD
+                 @elseif($item->chatluong==1)
+                    2K
+                 @elseif($item->chatluong==2)
+                    4K
+                 @endif
+                  </div>
+                 <div class="duration">
+                    <ion-icon name="time-outline"></ion-icon>
+                    <time datetime="PT{{$item->thoiluong}}M">{{$item->thoiluong}} min</time>
+                 </div>
+                 <div class="rating">
+                    <ion-icon name="star"></ion-icon>
+                    <data>{{$item->tbdanhgia}}</data>
+                 </div>
+              </div>
+           </div>
+        </li>
+        @endforeach 
+      </ul>
+   </div>
+</section>
+@endif
+{{-- Phim User xem khi đánh giá --}}
+@if(!empty($phimdexuat_sao)&&$phimdexuat_sao->count()>0)
+<section class="upcoming">
+   <div class="container">
+      <div class="flex-wrapper">
+         <div class="title-wrapper">
+            <p class="section-subtitle">Đánh Giá Cao</p>
+            <h2 class="h2 section-title">Dựa Trên Đánh Giá Của Bạn</h2>
+         </div>
+      </div>
+      <ul class="movies-list  has-scrollbar">
+
+        @foreach ($phimdexuat_sao as $key => $item)
+        <li>
+           <div class="movie-card">
+              <a href="{{route('chitietphim',$item->slug)}}">
+                 <figure class="card-banner">
+                    <img src="{{asset('/uploads/anhphim/'.$item->hinhanh)}}" alt="{{$item->tieude}}">
+                 </figure>
+              </a>
+              <div class="title-wrapper">
+                 <a href="{{route('chitietphim',$item->slug)}}">
+                    <h3 class="card-title">{{$item->tieude}}</h3>
+                 </a>
+                 <time datetime="{{$item->namphim}}">{{$item->namphim}}</time>
+              </div>
+              <div class="card-meta">
+                 <div class="badge badge-outline">
+                    @if ($item->chatluong==0)
+                    HD
+                 @elseif($item->chatluong==1)
+                    2K
+                 @elseif($item->chatluong==2)
+                    4K
+                 @endif
+                  </div>
+                 <div class="duration">
+                    <ion-icon name="time-outline"></ion-icon>
+                    <time datetime="PT{{$item->thoiluong}}M">{{$item->thoiluong}} min</time>
+                 </div>
+                 <div class="rating">
+                    <ion-icon name="star"></ion-icon>
+                    <data>{{$item->tbdanhgia}}</data>
+                 </div>
+              </div>
+           </div>
+        </li>
+        @endforeach 
+      </ul>
+   </div>
+</section>
+@endif
  <!-- 
     - #UPCOMING
-    -->
+   -->
+   @if(!empty($recommendations))
  <section class="upcoming">
     <div class="container">
        <div class="flex-wrapper">
           <div class="title-wrapper">
-             <p class="section-subtitle">Phim Hay Dành Cho Bạn</p>
-             <h2 class="h2 section-title">Đề Xuất</h2>
+             <p class="section-subtitle">Phim Phù Hợp</p>
+             <h2 class="h2 section-title">Tương Tự Các Phim Bạn Đã Xem</h2>
           </div>
        </div>
        <ul class="movies-list  has-scrollbar">
-         @if(!empty($recommendations))
          @foreach ($recommendations as $key => $item)
          <li>
             <div class="movie-card">
@@ -93,48 +198,13 @@
             </div>
          </li>
          @endforeach
-         @else
-         @foreach ($phimtopsao as $key => $item)
-         <li>
-            <div class="movie-card">
-               <a href="{{route('chitietphim',$item->slug)}}">
-                  <figure class="card-banner">
-                     <img src="{{asset('/uploads/anhphim/'.$item->hinhanh)}}" alt="{{$item->tieude}}">
-                  </figure>
-               </a>
-               <div class="title-wrapper">
-                  <a href="{{route('chitietphim',$item->slug)}}">
-                     <h3 class="card-title">{{$item->tieude}}</h3>
-                  </a>
-                  <time datetime="{{$item->namphim}}">{{$item->namphim}}</time>
-               </div>
-               <div class="card-meta">
-                  <div class="badge badge-outline">
-                     @if ($item->chatluong==0)
-                     HD
-                  @elseif($item->chatluong==1)
-                     2K
-                  @elseif($item->chatluong==2)
-                     4K
-                  @endif
-                   </div>
-                  <div class="duration">
-                     <ion-icon name="time-outline"></ion-icon>
-                     <time datetime="PT{{$item->thoiluong}}M">{{$item->thoiluong}} min</time>
-                  </div>
-                  <div class="rating">
-                     <ion-icon name="star"></ion-icon>
-                     <data>{{$item->tbdanhgia}}</data>
-                  </div>
-               </div>
-            </div>
-         </li>
-         @endforeach
-         @endif
          
-       </ul>
-    </div>
- </section>
+      </ul>
+   </div>
+</section>
+@endif
+
+ 
  <!-- 
     - #TOP RATED
     -->

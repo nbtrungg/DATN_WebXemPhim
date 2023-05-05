@@ -32,16 +32,17 @@ class PhimController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $listphim=Phim::with('danhmuc','theloai','quocgia')->orderBy('id','DESC')->get();
+        $listphim=Phim::with('danhmuc','phim_theloai','quocgia')->orderBy('id','DESC')->get();
         $danhmuc=Danhmuc::pluck('tieude','id');
         $theloai=Theloai::pluck('tieude','id');
         $quocgia=Quocgia::pluck('tieude','id');
+        $listtheloai=Theloai::all();
         $path=public_path()."/json_file/";
         if(!is_dir($path)){
             mkdir($path,0777,true);
         }
         File::put($path.'phim.json',json_encode($listphim));
-        return view('admin.phim.formphim', compact('listphim','user','danhmuc','theloai','quocgia'));
+        return view('admin.phim.formphim', compact('listphim','user','danhmuc','theloai','quocgia','listtheloai'));
     }
 
     /**
@@ -60,7 +61,7 @@ class PhimController extends Controller
         $phim->namphim=$data['namphim'];
         $phim->thoiluong=$data['thoiluong'];
         $phim->danhmuc_id=$data['danhmuc_id'];
-        $phim->theloai_id=$data['theloai_id'];
+        // $phim->theloai_id=$data['theloai_id'];
         $phim->quocgia_id=$data['quocgia_id'];
         //Thêm ảnh
         $get_image=$request->file('image');
@@ -73,6 +74,8 @@ class PhimController extends Controller
             $phim->hinhanh=$new_image;
         }
         $phim->save();
+        //Thêm nhiều thể loại phim
+        $phim->phim_theloai()->attach($data['theloai']);
         return redirect()->back()->with('success','Thêm thành công!');
     }
 
@@ -90,12 +93,16 @@ class PhimController extends Controller
     public function edit(string $id)
     {
         $user = Auth::user();
-        $editphim=Phim::find($id);
-        $listphim=Phim::with('danhmuc','theloai','quocgia')->orderBy('id','DESC')->get();
+        $editphim=Phim::with('danhmuc','phim_theloai','quocgia')->find($id);
+        // return dd($editphim);
+        $listphim=Phim::with('danhmuc','phim_theloai','quocgia')->orderBy('id','DESC')->get();
         $danhmuc=Danhmuc::pluck('tieude','id');
         $theloai=Theloai::pluck('tieude','id');
         $quocgia=Quocgia::pluck('tieude','id');
-        return view('admin.phim.formphim',compact('listphim','editphim','user','danhmuc','theloai','quocgia'));
+        $listtheloai=Theloai::all();
+        $phim_theloai=$editphim->phim_theloai;
+
+        return view('admin.phim.formphim',compact('listphim','editphim','user','danhmuc','theloai','quocgia','listtheloai','phim_theloai'));
     }
 
     /**
@@ -114,7 +121,7 @@ class PhimController extends Controller
         $phim->namphim=$data['namphim'];
         $phim->thoiluong=$data['thoiluong'];
         $phim->danhmuc_id=$data['danhmuc_id'];
-        $phim->theloai_id=$data['theloai_id'];
+        // $phim->theloai_id=$data['theloai_id'];
         $phim->quocgia_id=$data['quocgia_id'];
         //Thêm ảnh
         $get_image=$request->file('image');
@@ -130,6 +137,8 @@ class PhimController extends Controller
             $phim->hinhanh=$new_image;
         }
         $phim->save();
+        $phim->phim_theloai()->sync($data['theloai']);
+
         return redirect()->route('phim.create')->with('success','Cập nhật thành công!');
     }
 

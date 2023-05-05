@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Auth;
 // use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Models\Theloai;
 
 class LoginController extends Controller
 {
     public function getLogin(){
-        return view('user.login');
+        $listtheloai=Theloai::all();
+        return view('user.login',compact('listtheloai'));
     }
 
     public function postLogin(Request $request){
@@ -53,11 +55,13 @@ class LoginController extends Controller
     }
 // Đăng ký user
     public function postdangky(Request $request){
+        // return dd($request);
         $user= new User();
         $user->name=$request->input('name');
         $user->email=$request->input('email_dk');
         $user->password=bcrypt($request->input('pass_dk'));
         $user->save();
+        $user->user_theloai()->attach($request->input('theloai'));
         return redirect()->route('login_user')->with('success','Đăng ký thành công!');
     }
 // check email trùng khi đăng ký
@@ -147,11 +151,12 @@ class LoginController extends Controller
             if (isset($_POST['redirect'])) {
                 header('Location: ' . $vnp_Url);
                 $user = Auth::user();
+                $thoigian = Goidichvu::find($goi_id);
                 DB::table('user_goi')->insert([
                     'user_id' => $user->id,
                     'goi_id' => $goi_id,
                     'start_date'=> Carbon::now(),
-                    'end_date'=> Carbon::now()->addMonth(),
+                    'end_date'=> Carbon::now()->addDays($thoigian->thoigian),
 
                 ]);;
                 die();

@@ -102,10 +102,26 @@
                 {!! Form::select('danhmuc_id',$danhmuc, isset($editphim) ? $editphim->danhmuc_id : '', ['id' => 'danhmuc_id', 'class' => 'form-control', 'required' => 'required']) !!}
                 <small class="text-danger">{{ $errors->first('danhmuc') }}</small>
                 </div>
-                <div class="form-group{{ $errors->has('theloai') ? ' has-error' : '' }}">
+                {{-- <div class="form-group{{ $errors->has('theloai') ? ' has-error' : '' }}">
                 {!! Form::label('theloai_id', 'Thể Loại') !!}
                 {!! Form::select('theloai_id',$theloai, isset($editphim) ? $editphim->theloai_id : '', ['id' => 'theloai_id', 'class' => 'form-control', 'required' => 'required']) !!}
                 <small class="text-danger">{{ $errors->first('theloai') }}</small>
+                </div> --}}
+                <div class="form-group">
+                <div class="checkbox{{ $errors->has('checkbox_id') ? ' has-error' : '' }}">
+                {!! Form::label('theloai_id', 'Thể Loại') !!}<br>
+                @foreach ($listtheloai as $key => $item)
+                    
+                <label for="checkbox_id">
+                  @if(isset($editphim))
+                {!! Form::checkbox('theloai[]', $item->id, isset($phim_theloai) && $phim_theloai->contains($item->id) ? true : false, ['id' => 'checkbox_id']) !!} {{$item->tieude}}
+                  @else
+                {!! Form::checkbox('theloai[]', $item->id, null, ['id' => 'checkbox_id']) !!} {{$item->tieude}}
+                  @endif
+                </label>
+                @endforeach
+                </div>
+                <small class="text-danger">{{ $errors->first('checkbox_id') }}</small>
                 </div>
                 <div class="form-group{{ $errors->has('quocgia') ? ' has-error' : '' }}">
                 {!! Form::label('quocgia_id', 'Quốc Gia') !!}
@@ -114,7 +130,7 @@
                 </div>
                 <div class="form-group{{ $errors->has('photo') ? ' has-error' : '' }}">
                 {!! Form::label('image', 'Ảnh') !!}
-                {!! Form::file('image', ['class' => 'form-control-file', isset($editphim) ? '' : 'required' => 'required']) !!}
+                {!! Form::file('image', ['class' => 'form-control-file', isset($editphim) ? '' : 'required' => 'required','accept'=>'image/*','multiple']) !!}
                 <small class="text-danger">{{ $errors->first('photo') }}</small>
                 @if(!empty($editphim))
                 <img style="width: 100px" src="{{asset('uploads/anhphim/'.$editphim->hinhanh)}}" alt="">
@@ -171,7 +187,12 @@
                         <td>{{$item->namphim}}</td>
                         <td>{{$item->thoiluong}}</td>
                         <td>{{$item->danhmuc->tieude}}</td>
-                        <td>{{$item->theloai->tieude}}</td>
+                        <td>
+                          @foreach ($item->phim_theloai as $item1)
+                              
+                          {{$item1->tieude}}<br>
+                          @endforeach
+                        </td>
                         <td>{{$item->quocgia->tieude}}</td>
                         <td>
                           @if ($item->trangthai==0)

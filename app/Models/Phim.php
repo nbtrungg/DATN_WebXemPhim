@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Phim extends Model
 {
     public $timestamps=false;
+    use SearchableTrait;
     use HasFactory;
     public function danhmuc(){
         return $this->belongsTo(Danhmuc::class,'danhmuc_id');
@@ -39,4 +41,15 @@ class Phim extends Model
     {
         return $this->belongsToMany(User::class, 'yeuthiches', 'phim_id', 'user_id');
     }
+    public function phim_theloai()
+    {
+        return $this->belongsToMany(Theloai::class,'phim_theloai','phim_id','theloai_id');
+    }
+    protected $searchable = [
+        'columns' => [
+            'phims.tieude' => 50,
+            'phims.mota' => 5,
+            // 'phims.namphim' => 5,
+        ],
+    ];
 }

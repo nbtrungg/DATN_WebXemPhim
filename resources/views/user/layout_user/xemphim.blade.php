@@ -1,5 +1,11 @@
 @extends('user.index')
 @section('content')
+<style>
+   .vjs-big-play-centered{
+      width:100%;
+      height:600px;
+   }
+</style>
 <!-- 
    - #MOVIE DETAIL
    -->
@@ -53,7 +59,9 @@
            </div>
            <div style=" margin-bottom: 5px;" class="ganre-wrapper">
               <span style="color: yellow">Thể Loại: </span>
-              <a href="{{route('theloai',$chitietphim->theloai->slug)}}">{{$chitietphim->theloai->tieude}}</a>
+              @foreach ($chitietphim->phim_theloai as $item)
+              <a href="{{route('theloai',$item->slug)}}">{{$item->tieude}}</a>   
+              @endforeach
               {{-- <a href="#">Action,</a>
               <a href="#">Adventure,</a>
               <a href="#">Science Fiction</a> --}}
@@ -96,14 +104,40 @@
 <section class="top-rated">
     <div class="container">
        <!-- <iframe width="100%" height="600" src="https://youtu.be/EBU0K74TC-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-       {{-- <iframe  width="100%" height="700" src="https://www.youtube.com/embed/EBU0K74TC-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> --}}
+       {{-- <iframe  width="100%" height="700" src="https://www.youtube.com/embed/EBU0K74TC-k?start=90" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> --}}
          
          {{-- <video width="100%" height="600" controls>
             <source src="{{asset('/uploads/phim/'.$tapphim->linkphim)}}">
           </video> --}}
-          <iframe  width="100%" height="600" src="{{$tapphim->linkphim}}" frameborder="0" allow="autostop" allowfullscreen></iframe>
-         
+          {{-- <iframe id="myVideo" src="https://kd.hd-bophim.com/share/4f47f68c8ad4792d404d2ff5e57c97ba?start=150" width="100%" height="600" frameborder="0" allow="autostop" allowfullscreen></iframe> --}}
+          
+         <video id="my-video" data-id="{{$tapphim->id}}" @if(!empty($tientrinh)) data-tientrinh="{{$tientrinh->thoigian}}" @else data-tientrinh="0" @endif class="video-js vjs-big-play-centered" controls preload="auto">
+            <source src="{{$tapphim->linkphim}}" type="application/x-mpegURL">
+         </video>
+         <!-- Đường dẫn đến thư viện Video.js -->
+         <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+         <script>
+            // Khởi tạo video player
+            var player = videojs('my-video');
+            var video = document.getElementsByTagName('video')[0];
+            var tientrinh = video.getAttribute('data-tientrinh');
+            video.addEventListener('loadedmetadata', function() {
+               video.currentTime = tientrinh;
+               video.play();
+               // video.addEventListener('timeupdate', function() {
+               // var currentTime = this.currentTime;
+               // var tapphim_id=$('#my-video').data("id");
+
+               // console.log(tapphim_id);
+               // // Lưu currentTime vào cơ sở dữ liệu
+
+
+            // });
+         });
+         </script>
+        
       </div>
+      
     <div class="container" style="margin-top: 20px;">
        <div>
           <h5 style="color: white;">Tập Phim:</h5>
@@ -235,4 +269,8 @@
     </div>
  </section>
     
+@endsection
+
+@section('luutientrinh')
+<script src="\assets\js\luutientrinh.js"></script>
 @endsection

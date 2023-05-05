@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Phim::class, 'yeuthiches', 'user_id', 'phim_id');
     }
+
+    public function user_theloai()
+    {
+        return $this->belongsToMany(Theloai::class,'user_theloai','user_id','theloai_id');
+    }
 }

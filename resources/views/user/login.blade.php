@@ -51,7 +51,20 @@
 <style>
   .error {
     color: yellow;
+  }
+  .form-check-inline {
+    display: inline-block;
+    width: 25%; /* chia đều cho 4 cột */
+    box-sizing: border-box; /* giữa các padding, border không ảnh hưởng đến chiều rộng của ô */
+    padding-right: 10px; /* tạo khoảng cách giữa các ô */
+  }
+  .checkbox-container {
+  display: flex; /* đảm bảo các ô được sắp xếp trên cùng một dòng */
+  flex-wrap: wrap; /* nếu không đủ chỗ thì dòng mới bắt đầu */
+  margin: -10px 0; /* xóa khoảng cách giữa các dòng */
 }
+
+
 </style>
 </head>
 
@@ -340,6 +353,17 @@
           <input style="color: white" name="cfpass" type="password" id="registerRepeatPassword" class="form-control" />
           <label style="color: white" class="form-label" for="registerRepeatPassword">Nhập Lại Mật Khẩu</label>
         </div>
+        <label for="">Thể Loại Phim Yêu Thích</label><br>
+        <div class="form-outline mb-4">
+
+          @foreach ($listtheloai as $key => $item)
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="theloai[]" id="{{$item->id}}" value="{{$item->id}}" />
+            <label class="form-check-label" for="{{$item->id}}">{{$item->tieude}}</label>
+          </div>
+          @endforeach
+        </div>
+        
   
         <!-- Checkbox -->
         {{-- <div class="form-check d-flex justify-content-center mb-4">

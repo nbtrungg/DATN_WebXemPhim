@@ -76,7 +76,9 @@
          </div>
          <div style=" margin-bottom: 5px;" class="ganre-wrapper">
             <span style="color: yellow">Thể Loại: </span>
-            <a href="{{route('theloai',$chitietphim->theloai->slug)}}">{{$chitietphim->theloai->tieude}}</a>
+            @foreach ($chitietphim->phim_theloai as $item)
+            <a href="{{route('theloai',$item->slug)}}">{{$item->tieude}}</a>   
+            @endforeach
             {{-- <a href="#">Action,</a>
             <a href="#">Adventure,</a>
             <a href="#">Science Fiction</a> --}}

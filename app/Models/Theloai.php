@@ -9,4 +9,12 @@ class Theloai extends Model
 {
     public $timestamps=false;
     use HasFactory;
+    public function phim()
+    {
+        return $this->belongsTo(Phim::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
