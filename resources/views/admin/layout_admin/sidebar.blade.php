@@ -77,6 +77,12 @@
                 <p>Gói Dịch Vụ</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{route('nguoi-dung.create')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Người Dùng</p>
+              </a>
+            </li>
           </ul>
         </li>
       </ul>

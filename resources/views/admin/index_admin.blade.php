@@ -20,6 +20,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="/dist/css/adminlte.min.css">
   {{-- sắp xếp bảng bằng jquery UI  --}}
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  {{-- <link rel="stylesheet" href="/assets/css/list.css"> --}}
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">

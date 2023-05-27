@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Lichsuphim extends Model
 {
     use HasFactory;
-
+    public function phim()
+    {
+        return $this->belongsTo(Phim::class);
+    }
 }

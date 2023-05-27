@@ -274,6 +274,7 @@ body.active { overflow: hidden; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 300px;
 }
 
 .movie-card .card-banner {

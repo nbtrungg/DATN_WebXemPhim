@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CusController;
 use App\Http\Controllers\User\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\IndexController;
@@ -84,6 +85,7 @@ Route::get('/admin/logout',[LoginController::class,'logout_admin'])->name('logou
             Route::resource('phim',PhimController::class);
             Route::resource('tap-phim',TapPhimController::class);
             Route::resource('goi-dich-vu',GoiDichVuController::class);
+            Route::resource('nguoi-dung',CusController::class);
             Route::get('them-tap-phim/{id}',[TapPhimController::class,'themtapphim'])->name('them-tap-phim');;
 
         });

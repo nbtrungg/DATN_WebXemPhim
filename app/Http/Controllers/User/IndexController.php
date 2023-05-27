@@ -215,8 +215,8 @@ class IndexController extends Controller
         }
         // return dd($movies);
         //lấy link khi thanh toán
-        $param = $request->all();
-        // dd($param);
+        // $param = $request->all();
+        // return dd($param);
         // dump($param['vnp_Amount']);
         $danhmuc = Danhmuc::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $theloai = Theloai::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
@@ -233,7 +233,7 @@ class IndexController extends Controller
         // Phim top yêu thích
         $phimtopyeuthich = Phim::withCount('Yeuthich')->orderByDesc('yeuthich_count')->take(8)->get();
 
-        // dd($phimtopyeuthich);
+        // return dd($request);
         return view('user.layout_user.trangchu', compact('user', 'danhmuc', 'theloai', 'quocgia', 'phimtopsao', 'phimtopbinhluan', 'phimtopyeuthich', 'recommendations', 'phim_user_theloai', 'phimdexuat_sao'));
     }
 
@@ -243,7 +243,7 @@ class IndexController extends Controller
         $theloai = Theloai::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $quocgia = Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $danhmuc_slug = Danhmuc::where('slug', $slug)->first();
-        $phim = Phim::where('danhmuc_id', $danhmuc_slug->id)->paginate(12);
+        $phim = Phim::where('danhmuc_id', $danhmuc_slug->id)->orderBy('id','DESC')->paginate(12);
         foreach ($phim as $key => $item) {
             $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
         }
@@ -265,7 +265,7 @@ class IndexController extends Controller
             $nhieu_theloai[] = $item->phim_id;
         }
         // return dd($nhieu_theloai);
-        $phim = Phim::whereIn('id', $nhieu_theloai)->paginate(12);
+        $phim = Phim::whereIn('id', $nhieu_theloai)->orderBy('id','DESC')->paginate(12);
         foreach ($phim as $key => $item) {
             $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
         }
@@ -279,7 +279,7 @@ class IndexController extends Controller
         $theloai = Theloai::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $quocgia = Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $quocgia_slug = Quocgia::where('slug', $slug)->first();
-        $phim = Phim::where('quocgia_id', $quocgia_slug->id)->paginate(12);
+        $phim = Phim::where('quocgia_id', $quocgia_slug->id)->orderBy('id','DESC')->paginate(12);
         foreach ($phim as $key => $item) {
             $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
         }
@@ -378,13 +378,14 @@ class IndexController extends Controller
         $theloai = Theloai::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $quocgia = Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         // $user = User::find(1);
-        $phim = $user->phimyeuthich()->orderBy('yeuthiches.id', 'DESC')->paginate(12);
+        $phim = $user->phimlichsu()->orderBy('lichsuphims.id', 'DESC')->paginate(12);
         // $phim=Yeuthich::with('phim')->where('user_id',$user->id)->paginate(12);
         foreach ($phim as $key => $item) {
             $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
         }
         // dd($phim[1]->tbdanhgia());
-        return view('user.layout_user.lichsuphim', compact('user', 'danhmuc', 'theloai', 'quocgia', 'phim'));
+        // $lichsuphim=Lichsuphim::where('user_id',$user->id)->paginate(12);
+        return view('user.layout_user.lichsuphim', compact('user', 'danhmuc', 'theloai', 'quocgia', 'phim',));
     }
 
     public function trangchuadmin()

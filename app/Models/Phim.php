@@ -41,6 +41,10 @@ class Phim extends Model
     {
         return $this->belongsToMany(User::class, 'yeuthiches', 'phim_id', 'user_id');
     }
+    public function userlichsu()
+    {
+        return $this->belongsToMany(User::class, 'lichsuphims', 'phim_id', 'user_id');
+    }
     public function phim_theloai()
     {
         return $this->belongsToMany(Theloai::class,'phim_theloai','phim_id','theloai_id');
@@ -48,8 +52,8 @@ class Phim extends Model
     protected $searchable = [
         'columns' => [
             'phims.tieude' => 50,
-            'phims.mota' => 5,
-            // 'phims.namphim' => 5,
+            'phims.mota' => 10,
+            'phims.namphim' => 5,
         ],
     ];
 }

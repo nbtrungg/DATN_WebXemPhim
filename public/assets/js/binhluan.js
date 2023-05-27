@@ -13,7 +13,7 @@ $('#binhluan').click(function(e){
         type:"POST",
         
         data:{
-            content: content,
+            content: content,  
             user_id: user_id,
             phim_id: phim_id,
         },
