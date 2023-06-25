@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CusController extends Controller
 {
@@ -33,12 +34,17 @@ class CusController extends Controller
     public function store(Request $request)
     {
         $data= $request->all();
-        $danhmuc=new Danhmuc();
-        $danhmuc->tieude=$data['tieude'];
-        $danhmuc->mota=$data['mota'];
-        $danhmuc->trangthai=$data['trangthai'];
-        $danhmuc->slug=$data['slug'];
-        $danhmuc->save();
+        $user=new User();
+        $user->name=$data['ten'];
+        $user->email=$data['email'];
+        $user->password= bcrypt($data['password']);
+        $user->save();
+        // $user = new User();
+        // $user->name = $request->input('name');
+        // $user->email = $request->input('email_dk');
+        // $user->password = bcrypt($request->input('pass_dk'));
+        // $user->save();
+        // $user->user_theloai()->attach($request->input('theloai'));
         return redirect()->back()->with('success','Thêm thành công!');
     }
 
@@ -56,9 +62,10 @@ class CusController extends Controller
     public function edit(string $id)
     {
         $user = Auth::user();
-        $editdanhmuc=Danhmuc::find($id);
-        $listdanhmuc=Danhmuc::orderBy('sapxephang','ASC')->get();
-        return view('admin.danh_muc.formdanhmuc',compact('listdanhmuc','editdanhmuc','user'));
+        $editcus=User::find($id);
+        $user_goi=DB::table('user_goi')->where('user_id',$editcus->id)->orderBy('id','DESC')->first();
+        $listuser=User::orderBy('id','DESC')->get();
+        return view('admin.customer.formcus',compact('listuser','editcus','user','user_goi'));
     }
 
     /**
@@ -66,14 +73,23 @@ class CusController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // $data= $request->all();
+        // $danhmuc= Danhmuc::find($id);
+        // $danhmuc->tieude=$data['tieude'];
+        // $danhmuc->mota=$data['mota'];
+        // $danhmuc->trangthai=$data['trangthai'];
+        // $danhmuc->slug=$data['slug'];
+        // $danhmuc->save();
         $data= $request->all();
-        $danhmuc= Danhmuc::find($id);
-        $danhmuc->tieude=$data['tieude'];
-        $danhmuc->mota=$data['mota'];
-        $danhmuc->trangthai=$data['trangthai'];
-        $danhmuc->slug=$data['slug'];
-        $danhmuc->save();
-        return redirect()->route('danh-muc.create')->with('success','Cập nhật thành công!');
+        $user=User::find($id);
+        $user->name=$data['ten'];
+        $user->email=$data['email'];
+        // $user->password= bcrypt($data['password']);
+        if(!empty($data['date'])){
+        DB::table('user_goi')->where('user_id',$id)->update(['end_date'=>$data['date']]);
+        }
+        $user->save();
+        return redirect()->route('nguoi-dung.create')->with('success','Cập nhật thành công!');
     }
 
     /**
@@ -81,7 +97,7 @@ class CusController extends Controller
      */
     public function destroy(string $id)
     {
-        Danhmuc::find($id)->delete();
+        User::find($id)->delete();
         return redirect()->back()->with('success','Xóa thành công!');
     }
 

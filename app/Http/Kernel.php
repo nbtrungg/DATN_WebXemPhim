@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Check_DichVu::class,
+        \App\Http\Middleware\Check_TheLoai::class,
         // \App\Http\Middleware\AdminMiddleware::class,
     ];
 
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\IsAdmin::class,
         'checkdichvu' => \App\Http\Middleware\Check_DichVu::class,
+        'checktheloai' => \App\Http\Middleware\Check_TheLoai::class,
         // 'admin'=> \App\Http\Middleware\AdminMiddleware::class,
 
     ];

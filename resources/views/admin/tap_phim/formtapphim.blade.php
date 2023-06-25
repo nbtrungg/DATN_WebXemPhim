@@ -35,10 +35,10 @@
           <div class="col-sm-6">
             <h1 class="m-0">Tập Phim</h1>
           </div><!-- /.col -->
-          <div class="col-sm-6">
+          <div class="col-sm-6"breadcrumb>
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Trang Chủ</a></li>
-              <li class="breadcrumb-item active">Tập Phim</li>
+              <li class="-item active">Tập Phim</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -110,7 +110,6 @@
                         <th scope="col">STT</th>
                         <th scope="col">Tiêu Đề</th>
                         <th scope="col">Tập</th>
-                        <th scope="col">Phim</th>
                         <th scope="col">#</th>
                       </tr>
                     </thead>
@@ -122,12 +121,7 @@
                         <td>{{$item->phim->tieude}}</td>
                         <td>{{$item->tap}}</td>
                         <td>
-                          <video style="width: 300px; height: 150px;" controls>
-                            <source src="{{asset('uploads/phim/'.$item->linkphim)}}">
-                          </video>
-                        </td>
-                        <td>
-                          <div class="row">
+                          <div class="row" style="display: flex; justify-content: space-evenly;">
 
                             {!! Form::open(['method' => 'DELETE', 'route' => ['tap-phim.destroy',$item->id],'id'=> 'tapphim'.$item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletetapphim']) !!}
                             {!! Form::submit('Xóa', ['class' => 'btn btn-danger']) !!}

@@ -76,7 +76,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/assets/js/phim.js"></script>
 <script src="/assets/js/tapphim.js"></script>
 <script src="/assets/js/goidichvu.js"></script>
-
+<link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet"/>
 
 {{-- sắp xếp bảng --}}
 <script src="/assets/js/sapxepbang.js"></script>
@@ -85,6 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/assets/js/slug.js" type="text/javascript"></script>
 {{-- sweet_alret --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/assets/js/sitebar.js"></script>
 
 
 </body>

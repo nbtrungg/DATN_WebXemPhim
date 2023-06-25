@@ -114,7 +114,7 @@
                           @endif
                         </td>
                         <td>
-                          <div class="row">
+                          <div class="row" style="display: flex; justify-content: space-evenly;">
 
                             {!! Form::open(['method' => 'DELETE', 'route' => ['the-loai.destroy',$item->id],'id'=> 'theloai'.$item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletetheloai']) !!}
                             {!! Form::submit('Xóa', ['class' => 'btn btn-danger']) !!}

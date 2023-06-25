@@ -33,12 +33,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Danh Mục</h1>
+            <h1 class="m-0">Người Dùng</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Trang Chủ</a></li>
-              <li class="breadcrumb-item active">Danh Mục</li>
+              <li class="breadcrumb-item active">Người Dùng</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -51,39 +51,55 @@
       <div class="container-fluid">
         <div class="card card-primary">
             <div class="card-body">
-              @if (!isset($editdanhmuc))
-              {!! Form::open(['route'=>'danh-muc.store','method'=>'POST']) !!}
+              @if (!isset($editcus))
+              {!! Form::open(['route'=>'nguoi-dung.store','method'=>'POST']) !!}
               @else
-              {!! Form::open(['route'=>['danh-muc.update',$editdanhmuc->id],'method'=>'PUT']) !!}
+              {!! Form::open(['route'=>['nguoi-dung.update',$editcus->id],'method'=>'PUT']) !!}
               @endif
-                <div class="form-group{{ $errors->has('tieude') ? ' has-error' : '' }}">
-                {!! Form::label('tieude', 'Tiêu Đề') !!}
-                {!! Form::text('tieude', isset($editdanhmuc) ? $editdanhmuc->tieude : '', ['onkeyup'=>'ChangeToSlug()','id'=>'slug','class' => 'form-control', 'required' => 'required']) !!}
-                <small class="text-danger">{{ $errors->first('tieude') }}</small>
+                <div class="form-group{{ $errors->has('ten') ? ' has-error' : '' }}">
+                {!! Form::label('ten', 'Họ Tên') !!}
+                {!! Form::text('ten', isset($editcus) ? $editcus->name : '', ['onkeyup'=>'ChangeToSlug()','id'=>'slug','class' => 'form-control', 'required' => 'required']) !!}
+                <small class="text-danger">{{ $errors->first('ten') }}</small>
                 </div>
-                <div class="form-group{{ $errors->has('slug') ? ' has-error' : '' }}">
-                  {!! Form::label('slug', 'Slug') !!}
-                  {!! Form::text('slug', isset($editdanhmuc) ? $editdanhmuc->slug : '', ['readonly','id'=>'convert_slug', 'class' => 'form-control', 'required' => 'required']) !!}
-                  <small class="text-danger">{{ $errors->first('slug') }}</small>
+                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                  {!! Form::label('email', 'Email') !!}
+                  {!! Form::text('email', isset($editcus) ? $editcus->email : '', [ 'class' => 'form-control', 'required' => 'required']) !!}
+                  <small class="text-danger">{{ $errors->first('email') }}</small>
                   </div>
-                <div class="form-group{{ $errors->has('inputname') ? ' has-error' : '' }}">
+                {{-- <div class="form-group{{ $errors->has('inputname') ? ' has-error' : '' }}">
                 {!! Form::label('mota', 'Mô Tả') !!}
-                {!! Form::textarea('mota', isset($editdanhmuc) ? $editdanhmuc->mota : '', ['class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::textarea('mota', isset($editcus) ? $editcus->mota : '', ['class' => 'form-control', 'required' => 'required']) !!}
                 <small class="text-danger">{{ $errors->first('mota') }}</small>
+                </div> --}}
+                @if (!isset($editcus))                
+                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                {!! Form::label('password', 'Password') !!}
+                {!! Form::password('password', ['class' => 'form-control', 'required' => 'required']) !!}
+                <small class="text-danger">{{ $errors->first('password') }}</small>
                 </div>
-                <div class="form-group{{ $errors->has('trangthai') ? ' has-error' : '' }}">
+                @endif
+                @if(!empty($user_goi))
+                <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
+                {!! Form::label('date', 'Ngày kết thúc gói') !!}
+                {!! Form::date('date', $user_goi->end_date, ['class' => 'form-control', 'required' => 'required']) !!}
+                <small class="text-danger">{{ $errors->first('date') }}</small>
+                </div>
+                @else
+
+                @endif
+                {{-- <div class="form-group{{ $errors->has('trangthai') ? ' has-error' : '' }}">
                 {!! Form::label('trangthai', 'Trạng Thái') !!}
-                {!! Form::select('trangthai',['1'=>'Hiển Thị','0'=>'Không Hiển Thị'], isset($editdanhmuc) ? $editdanhmuc->trangthai : '', ['id' => 'trangthai', 'class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::select('trangthai',['1'=>'Hiển Thị','0'=>'Không Hiển Thị'], isset($editcus) ? $editcus->trangthai : '', ['id' => 'trangthai', 'class' => 'form-control', 'required' => 'required']) !!}
                 <small class="text-danger">{{ $errors->first('trangthai') }}</small>
-                </div>
-                @if (!isset($editdanhmuc))
+                </div> --}}
+                @if (!isset($editcus))
                 {!! Form::submit('Thêm dữ liệu', ['class' => 'btn btn-info pull-right']) !!}
               
                 @else
                 {!! Form::submit('Cập nhật', ['class' => 'btn btn-info pull-right']) !!}
               
               @endif
-              <a href="{{route('danh-muc.create')}}" class="btn btn-secondary">hủy bỏ</a>
+              <a href="{{route('nguoi-dung.create')}}" class="btn btn-secondary">hủy bỏ</a>
                 {!! Form::close() !!}
             </div>
         </div>
@@ -95,7 +111,6 @@
                         <th scope="col">STT</th>
                         <th scope="col">Tên</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Trạng Thái</th>
                         <th scope="col">Vai Trò</th>
                         <th scope="col">#</th>
                       </tr>
@@ -104,23 +119,23 @@
                       @foreach ($listuser as $key => $item)
                           
                       <tr id="{{$item->id}}">
-                        <th scope="row">{{$item->sapxephang}}</th>
-                        <td>{{$item->tieude}}</td>
-                        <td>{{$item->mota}}</td>
+                        <th scope="row">{{++$key}}</th>
+                        <td>{{$item->name}}</td>
+                        <td>{{$item->email}}</td>
                         <td>
-                          @if ($item->trangthai==0)
-                              Không hiển thị
-                          @else 
-                              Hiển thị
-                          @endif
-                        </td>
+                            @if ($item->role==0)
+                                Khách Hàng
+                            @else 
+                                Admin
+                            @endif
+                          </td>
                         <td>
-                          <div class="row">
+                          <div class="row" style="display: flex; justify-content: space-evenly;">
 
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['danh-muc.destroy',$item->id],'id'=> 'danhmuc'.$item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletedanhmuc']) !!}
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['nguoi-dung.destroy',$item->id],'id'=> 'danhmuc'.$item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletedanhmuc']) !!}
                             {!! Form::submit('Xóa', ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
-                            <a href="{{route('danh-muc.edit',$item->id)}}" class="btn btn-warning">Sửa</a>
+                            <a href="{{route('nguoi-dung.edit',$item->id)}}" class="btn btn-warning">Sửa</a>
                           </div>
                         </td>
                       </tr>

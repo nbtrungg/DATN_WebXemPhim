@@ -310,7 +310,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <div class="row">
+                                            <div class="row" style="display: flex; justify-content: space-evenly;">
 
                                                 {!! Form::open([
                                                     'method' => 'DELETE',

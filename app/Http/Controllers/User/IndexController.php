@@ -316,6 +316,7 @@ class IndexController extends Controller
         $theloai = Theloai::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $quocgia = Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $chitietphim = Phim::with('danhmuc', 'phim_theloai', 'quocgia', 'tapphim')->where('slug', $slug)->where('trangthai', 1)->first();
+        $phimlienquan = Phim::with('danhmuc', 'theloai', 'quocgia')->where('danhmuc_id', $chitietphim->danhmuc->id)->orderBy(DB::raw('RAND()'))->whereNotIn('slug', [$slug])->get();
         if (isset($tap)) {
             $sotapphim = $tap;
             $sotapphim = substr($tap, 4);
@@ -325,6 +326,9 @@ class IndexController extends Controller
             $tapphim = Tapphim::where('phim_id', $chitietphim->id)->where('tap', $sotapphim)->first();
         }
         $phimlienquan = Phim::with('danhmuc', 'theloai', 'quocgia')->where('danhmuc_id', $chitietphim->danhmuc->id)->orderBy(DB::raw('RAND()'))->whereNotIn('slug', [$slug])->get();
+        foreach ($phimlienquan as $key => $item) {
+            $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
+        }
         $user = Auth::user();
         $lichsuphim_check = Lichsuphim::where('user_id', $user->id)->where('phim_id', $chitietphim->id)->count();
         if ($lichsuphim_check > 0) {
@@ -343,7 +347,7 @@ class IndexController extends Controller
 
         $tientrinh = Tientrinhxemphim::where('user_id',$user->id)->where('tapphim_id',$tapphim->id)->first();
         // dd($chitietphim);
-        return view('user.layout_user.xemphim', compact('user', 'danhmuc', 'theloai', 'quocgia', 'chitietphim', 'phimlienquan', 'tapphim', 'sotapphim', 'tientrinh'));
+        return view('user.layout_user.xemphim', compact('phimlienquan', 'user', 'danhmuc', 'theloai', 'quocgia', 'chitietphim', 'phimlienquan', 'tapphim', 'sotapphim', 'tientrinh'));
     }
 
     public function tapphim()
@@ -391,7 +395,7 @@ class IndexController extends Controller
     public function trangchuadmin()
     {
         $user = Auth::user();
-        return view('admin.index_admin', compact('user'));
+        return redirect()->route('thongke');
     }
 
     //bình luận
@@ -529,8 +533,7 @@ class IndexController extends Controller
         $movieName = $bestGuessLabels[0]['label'];
 
         unlink($absolutePath);
-        // return dd($movieName);
-        // $phim = Phim::where('tieude', 'LIKE', "%$movieName%")->paginate(12);
+        
         $phim = Phim::search($movieName)->paginate(12);
 
         foreach ($phim as $key => $item) {

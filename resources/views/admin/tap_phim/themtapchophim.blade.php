@@ -83,7 +83,33 @@
                     {!! Form::text('linkphim', isset($edittapphim) ? $edittapphim->linkphim : '', ['class' => 'form-control', 'required' => 'required']) !!}
                     <small class="text-danger">{{ $errors->first('linkphim') }}</small>
                     @if(!empty($edittapphim))
-                  <iframe src="{{$edittapphim->linkphim}}" frameborder="1"></iframe>
+                  {{-- <iframe src="{{$edittapphim->linkphim}}" frameborder="1"></iframe> --}}
+                  <div>
+                    <video width="500px" height="200px" id="my-video" class="video-js vjs-big-play-centered" controls preload="auto">
+                      <source src="{{$edittapphim->linkphim}}" type="application/x-mpegURL">
+                   </video>
+                   <!-- Đường dẫn đến thư viện Video.js -->
+                   <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+                   <script>
+                      // Khởi tạo video player
+                      var player = videojs('my-video');
+                      var video = document.getElementsByTagName('video')[0];
+                      var tientrinh = video.getAttribute('data-tientrinh');
+                      video.addEventListener('loadedmetadata', function() {
+                         video.currentTime = 0;
+                         video.play();
+                         // video.addEventListener('timeupdate', function() {
+                         // var currentTime = this.currentTime;
+                         // var tapphim_id=$('#my-video').data("id");
+          
+                         // console.log(tapphim_id);
+                         // // Lưu currentTime vào cơ sở dữ liệu
+          
+          
+                      // });
+                   });
+                   </script>
+                  </div>
                   @endif
                     </div>
                   <div class="form-group{{ $errors->has('chontap') ? ' has-error' : '' }}">
@@ -131,7 +157,7 @@
                         <td>{{$item->tap}}</td>
                         <td>{{$item->linkphim}}</td>
                         <td>
-                          <div class="row">
+                          <div class="row" style="display: flex; justify-content: space-evenly;">
 
                             {!! Form::open(['method' => 'DELETE', 'route' => ['tap-phim.destroy',$item->id],'id'=> 'tapphim'.$item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletetapphim']) !!}
                             {!! Form::submit('Xóa', ['class' => 'btn btn-danger']) !!}

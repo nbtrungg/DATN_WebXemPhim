@@ -156,7 +156,7 @@
  <!-- 
     - #TV SERIES
     -->
- <section class="tv-series">
+ {{-- <section class="tv-series">
     <div class="container">
        <p class="section-subtitle">Best TV Series</p>
        <h2 class="h2 section-title">World Best TV Series</h2>
@@ -267,7 +267,57 @@
           </li>
        </ul>
     </div>
- </section>
+ </section> --}}
+ <section class="upcoming">
+   <div class="container">
+      {{-- <p class="section-subtitle">Phim Liên Quan</p>
+      <h2 class="h2 section-title">Có Thể Bạn Muốn Xem</h2> --}}
+      <div class="flex-wrapper">
+        <div class="title-wrapper">
+           <p class="section-subtitle">Phim Liên Quan</p>
+           <h2 class="h2 section-title">Có Thể Bạn Muốn Xem</h2>
+        </div>
+     </div>
+      <ul class="movies-list has-scrollbar">
+        @foreach ($phimlienquan as $key => $item)
+         <li>
+            <div class="movie-card">
+               <a href="{{route('chitietphim',$item->slug)}}">
+                  <figure class="card-banner">
+                     <img src="{{asset('/uploads/anhphim/'.$item->hinhanh)}}" alt="{{$item->tieude}}">
+                  </figure>
+               </a>
+               <div class="title-wrapper">
+                  <a href="{{route('chitietphim',$item->slug)}}">
+                     <h3 class="card-title">{{$item->tieude}}</h3>
+                  </a>
+                  <time datetime="{{$item->namphim}}">{{$item->namphim}}</time>
+                 </div>
+               <div class="card-meta">
+                 <div class="badge badge-outline">
+                    @if ($item->chatluong==0)
+                    HD
+                 @elseif($item->chatluong==1)
+                    2K
+                 @elseif($item->chatluong==2)
+                    4K
+                 @endif
+                  </div>
+                 <div class="duration">
+                     <ion-icon name="time-outline"></ion-icon>
+                     <time datetime="PT{{$item->thoiluong}}M">{{$item->thoiluong}} min</time>
+                    </div>
+                  <div class="rating">
+                     <ion-icon name="star"></ion-icon>
+                     <data>{{$item->tbdanhgia}}</data>
+                  </div>
+               </div>
+            </div>
+         </li>
+         @endforeach
+      </ul>
+   </div>
+</section>
     
 @endsection
 

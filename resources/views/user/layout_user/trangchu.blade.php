@@ -13,11 +13,11 @@
    <section class="hero">
     <div class="container">
        <div class="hero-content">
-          <p class="hero-subtitle">Filmlane</p>
+          <p class="hero-subtitle">Trang Chủ</p>
           <h1 class="h1 hero-title">
-             Unlimited <strong>Movie</strong>, TVs Shows, & More.
+             Xem <strong>Phim</strong> Không Giới Hạn.
           </h1>
-          <div class="meta-wrapper">
+          {{-- <div class="meta-wrapper">
              <div class="badge-wrapper">
                 <div class="badge badge-fill">PG 18</div>
                 <div class="badge badge-outline">HD</div>
@@ -40,7 +40,7 @@
           <button class="btn btn-primary">
              <ion-icon name="play"></ion-icon>
              <span>Watch now</span>
-          </button>
+          </button> --}}
        </div>
     </div>
  </section>
@@ -353,7 +353,7 @@
  <!-- 
     - #TV SERIES
     -->
- <section class="tv-series">
+ {{-- <section class="tv-series">
     <div class="container">
        <p class="section-subtitle">Best TV Series</p>
        <h2 class="h2 section-title">World Best TV Series</h2>
@@ -464,6 +464,6 @@
           </li>
        </ul>
     </div>
- </section>
+ </section> --}}
      
 @endsection

@@ -100,6 +100,7 @@
                         <th scope="col">STT</th>
                         <th scope="col">Tiêu Đề</th>
                         <th scope="col">Mô Tả</th>
+                        <th scope="col">Giá (VNĐ)</th>
                         <th scope="col">Trạng Thái</th>
                         <th scope="col">#</th>
                       </tr>
@@ -111,6 +112,7 @@
                         <th scope="row">{{$item->sapxephang}}</th>
                         <td>{{$item->name}}</td>
                         <td>{{$item->mota}}</td>
+                        <td>{{number_format($item->gia, 0, '.', '.')}} đ</td>
                         <td>
                           @if ($item->trangthai==0)
                               Không hiển thị
@@ -119,7 +121,7 @@
                           @endif
                         </td>
                         <td>
-                          <div class="row">
+                          <div class="row" style="display: flex; justify-content: space-evenly;">
 
                             {!! Form::open(['method' => 'DELETE', 'route' => ['goi-dich-vu.destroy',$item->id],'id'=> 'goidichvu'.$item->id,'data-id'=> $item->id  ,'class' => 'form-horizontal deletegoidichvu']) !!}
                             {!! Form::submit('Xóa', ['class' => 'btn btn-danger']) !!}

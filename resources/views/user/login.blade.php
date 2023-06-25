@@ -353,7 +353,7 @@
           <input style="color: white" name="cfpass" type="password" id="registerRepeatPassword" class="form-control" />
           <label style="color: white" class="form-label" for="registerRepeatPassword">Nhập Lại Mật Khẩu</label>
         </div>
-        <label for="">Thể Loại Phim Yêu Thích</label><br>
+        {{-- <label for="">Thể Loại Phim Yêu Thích</label><br>
         <div class="form-outline mb-4">
 
           @foreach ($listtheloai as $key => $item)
@@ -362,7 +362,7 @@
             <label class="form-check-label" for="{{$item->id}}">{{$item->tieude}}</label>
           </div>
           @endforeach
-        </div>
+        </div> --}}
         
   
         <!-- Checkbox -->

@@ -216,6 +216,7 @@ rel="stylesheet"
                           <div class="card-body">
                             <h5 class="">{{$item->name}}</h5>
                             <p class="card-text">{{$item->mota}}</p>
+                            <p style="font-size: 30px; color: #ffb100;">{{ number_format($item->gia, 0, '.', '.')}} đ</p>
                             <form action="{{route('vnpay')}}" method="POST">
                               @csrf
                               <input type="hidden" name="gia" value="{{$item->gia}}">

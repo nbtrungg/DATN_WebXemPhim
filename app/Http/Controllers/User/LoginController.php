@@ -67,7 +67,7 @@ class LoginController extends Controller
         $user->email = $request->input('email_dk');
         $user->password = bcrypt($request->input('pass_dk'));
         $user->save();
-        $user->user_theloai()->attach($request->input('theloai'));
+        // $user->user_theloai()->attach($request->input('theloai'));
         return redirect()->route('login_user')->with('success', 'Đăng ký thành công!');
     }
     // check email trùng khi đăng ký
@@ -94,7 +94,7 @@ class LoginController extends Controller
         $gia = (int)$request->input('gia');
         $goi_id = (int)$request->input('goi_id');
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://127.0.0.1:8000/trang-chu";
+        $vnp_Returnurl = "http://127.0.0.1:8000/thanh-cong";
         $vnp_TmnCode = "FOU7AZZR"; //Mã website tại VNPAY 
         $vnp_HashSecret = "CGMYLXSCGNYWLWIQFTJTODWUPFEXDASX"; //Chuỗi bí mật
 
@@ -173,7 +173,18 @@ class LoginController extends Controller
         }
     }
 
+    //Thanh toán thành công
+    public function thanhcong(){
+        $listtheloai = Theloai::all();
 
+        return view('user.thanhcong',compact('listtheloai'));
+    }
+
+    public function dktheloai(Request $request){
+        $user = Auth::user();
+        $user->user_theloai()->attach($request->input('theloai'));
+        return redirect()->route('trangchu');
+    }
 
     //ADMIN
     public function getLoginAdmin()
