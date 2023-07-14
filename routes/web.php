@@ -59,7 +59,8 @@ Route:: middleware(['auth'])->group(function(){
             Route::get('/lich-su-xem-phim',[IndexController::class,'lichsuxemphim'])->name('lichsuxemphim');
             Route::get('/tim-kiem',[IndexController::class,'timkiem'])->name('timkiem');
             Route::post('/tim-kiem-anh',[IndexController::class,'timkiemanh'])->name('timkiemanh');
-        
+            Route::get('/thuat-toan',[IndexController::class,'thuattoan'])->name('thuattoan');
+            
 
 
             // bình luận

@@ -105,6 +105,7 @@
          <div class="title-wrapper">
             <p class="section-subtitle">Đánh Giá Cao</p>
             <h2 class="h2 section-title">Dựa Trên Đánh Giá Của Bạn</h2>
+            {{-- <a href="{{route('thuattoan')}}" target="_blank" rel="noopener noreferrer">Xem thuật toán</a> --}}
          </div>
       </div>
       <ul class="movies-list  has-scrollbar">

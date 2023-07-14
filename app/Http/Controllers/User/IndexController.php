@@ -129,8 +129,8 @@ class IndexController extends Controller
 
         // Lấy ra 10 bộ phim có điểm đề xuất cao nhất và trả về cho người dùng
         $phimdexuat_id = array_slice(array_keys($recommendations), 0, 10);
-        $phimdexuat_sao=[];
-        if(!empty($phimdexuat_id)){
+        $phimdexuat_sao = [];
+        if (!empty($phimdexuat_id)) {
 
             $phimdexuat_sao = Phim::whereIn('id', $phimdexuat_id)->orderByRaw("FIELD(id, " . implode(',', $phimdexuat_id) . ")")
                 ->whereNotIn('id', function ($query) {
@@ -139,7 +139,7 @@ class IndexController extends Controller
                         ->where('user_id', Auth::user()->id);
                 })
                 ->get();
-    
+
             foreach ($phimdexuat_sao as $key => $item) {
                 $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
             }
@@ -174,7 +174,7 @@ class IndexController extends Controller
                 foreach ($similarMovies as $similar) {
                     $similarMovie = Phim::find($similar->phim_id);
 
-                    if (!in_array($similarMovie, $recommendations)&&!$history->contains('phim_id', $similarMovie->id)) {
+                    if (!in_array($similarMovie, $recommendations) && !$history->contains('phim_id', $similarMovie->id)) {
                         $recommendations[] = $similarMovie;
                     }
                 }
@@ -234,6 +234,7 @@ class IndexController extends Controller
         $phimtopyeuthich = Phim::withCount('Yeuthich')->orderByDesc('yeuthich_count')->take(8)->get();
 
         // return dd($request);
+
         return view('user.layout_user.trangchu', compact('user', 'danhmuc', 'theloai', 'quocgia', 'phimtopsao', 'phimtopbinhluan', 'phimtopyeuthich', 'recommendations', 'phim_user_theloai', 'phimdexuat_sao'));
     }
 
@@ -243,7 +244,7 @@ class IndexController extends Controller
         $theloai = Theloai::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $quocgia = Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $danhmuc_slug = Danhmuc::where('slug', $slug)->first();
-        $phim = Phim::where('danhmuc_id', $danhmuc_slug->id)->orderBy('id','DESC')->paginate(12);
+        $phim = Phim::where('danhmuc_id', $danhmuc_slug->id)->orderBy('id', 'DESC')->paginate(12);
         foreach ($phim as $key => $item) {
             $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
         }
@@ -265,7 +266,7 @@ class IndexController extends Controller
             $nhieu_theloai[] = $item->phim_id;
         }
         // return dd($nhieu_theloai);
-        $phim = Phim::whereIn('id', $nhieu_theloai)->orderBy('id','DESC')->paginate(12);
+        $phim = Phim::whereIn('id', $nhieu_theloai)->orderBy('id', 'DESC')->paginate(12);
         foreach ($phim as $key => $item) {
             $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
         }
@@ -279,7 +280,7 @@ class IndexController extends Controller
         $theloai = Theloai::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $quocgia = Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $quocgia_slug = Quocgia::where('slug', $slug)->first();
-        $phim = Phim::where('quocgia_id', $quocgia_slug->id)->orderBy('id','DESC')->paginate(12);
+        $phim = Phim::where('quocgia_id', $quocgia_slug->id)->orderBy('id', 'DESC')->paginate(12);
         foreach ($phim as $key => $item) {
             $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
         }
@@ -345,7 +346,7 @@ class IndexController extends Controller
             $lichsuphim->save();
         }
 
-        $tientrinh = Tientrinhxemphim::where('user_id',$user->id)->where('tapphim_id',$tapphim->id)->first();
+        $tientrinh = Tientrinhxemphim::where('user_id', $user->id)->where('tapphim_id', $tapphim->id)->first();
         // dd($chitietphim);
         return view('user.layout_user.xemphim', compact('phimlienquan', 'user', 'danhmuc', 'theloai', 'quocgia', 'chitietphim', 'phimlienquan', 'tapphim', 'sotapphim', 'tientrinh'));
     }
@@ -464,7 +465,8 @@ class IndexController extends Controller
             $danhmuc = Danhmuc::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
             $theloai = Theloai::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
             $quocgia = Quocgia::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
-            $phim = Phim::where('tieude', 'LIKE', '%' . $search . '%')->paginate(12);
+            // $phim = Phim::where('tieude', 'LIKE', '%' . $search . '%')->paginate(12);
+            $phim = Phim::search($search)->paginate(12);
             foreach ($phim as $key => $item) {
                 $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
             }
@@ -475,7 +477,8 @@ class IndexController extends Controller
             return redirect()->to('/trang-chu');
         }
     }
-    public function timkiemanh(Request $request){
+    public function timkiemanh(Request $request)
+    {
         $user = Auth::user();
         $danhmuc = Danhmuc::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
         $theloai = Theloai::orderBy('sapxephang', 'ASC')->where('trangthai', 1)->get();
@@ -533,23 +536,24 @@ class IndexController extends Controller
         $movieName = $bestGuessLabels[0]['label'];
 
         unlink($absolutePath);
-        
+
         $phim = Phim::search($movieName)->paginate(12);
 
         foreach ($phim as $key => $item) {
             $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
         }
-        $search=$movieName;
+        $search = $movieName;
         return view('user.layout_user.timkiem', compact('user', 'danhmuc', 'theloai', 'quocgia', 'search', 'phim'));
     }
 
     //Lưu tiến trình xem phim của người dùng
-    public function luutientrinh(Request $request){
+    public function luutientrinh(Request $request)
+    {
         $data = $request->all();
         // return dd($data);
         $user = Auth::user();
-        $checktientrinh = Tientrinhxemphim::where('user_id',$user->id)->where('tapphim_id',$data['tapphim_id'])->first();
-        if(!empty($checktientrinh)){
+        $checktientrinh = Tientrinhxemphim::where('user_id', $user->id)->where('tapphim_id', $data['tapphim_id'])->first();
+        if (!empty($checktientrinh)) {
             $tientrinh = Tientrinhxemphim::find($checktientrinh->id);
             $tientrinh->user_id = $user->id;
             $tientrinh->tapphim_id = $data['tapphim_id'];
@@ -558,7 +562,7 @@ class IndexController extends Controller
             return response()->json([
                 'success' => true,
             ]);
-        }else{
+        } else {
             $tientrinh = new Tientrinhxemphim();
             $tientrinh->user_id = $user->id;
             $tientrinh->tapphim_id = $data['tapphim_id'];
@@ -568,7 +572,298 @@ class IndexController extends Controller
                 'success' => true,
             ]);
         }
-        
     }
-    
+    public function thuattoan()
+    {
+        // Lấy tất cả các người dùng
+        $users = DB::table('danhgias')
+            ->select('user_id')
+            ->distinct()
+            ->pluck('user_id');
+
+        // Sắp xếp các người dùng theo thứ tự tăng dần
+        $users = $users->sort();
+
+        // Chuyển đổi danh sách người dùng sang mảng
+        $users = $users->toArray();
+
+        // Lấy id của người dùng hiện tại
+        $userId = Auth::id();
+
+        // Tìm tất cả các bộ phim đã được đánh giá bởi người dùng khác
+        $otherUsers = DB::table('danhgias')
+            ->where('user_id', '<>', $userId)
+            ->pluck('user_id')
+            ->unique();
+
+        // Tính tổng điểm đánh giá và số lượt đánh giá cho tất cả các bộ phim đã được đánh giá bởi người dùng khác
+        $sums = DB::table('danhgias')
+            ->whereIn('user_id', $otherUsers)
+            ->groupBy('phim_id')
+            ->selectRaw('phim_id, SUM(sao) as sum, COUNT(*) as count')
+            ->get();
+
+        // Tạo một mảng chứa độ tương đồng giữa người dùng hiện tại và từng người dùng khác
+        $similarities = [];
+
+        foreach ($otherUsers as $otherUser) {
+            // Tìm các bộ phim đã được đánh giá bởi cả người dùng hiện tại và người dùng khác
+            $sharedMovies = DB::table('danhgias')
+                ->whereIn('user_id', [$userId, $otherUser])
+                ->groupBy('phim_id')
+                ->havingRaw('COUNT(*) = 2')
+                ->pluck('phim_id');
+
+            // Tính tổng điểm đánh giá của các bộ phim đã được đánh giá bởi cả người dùng hiện tại và người dùng khác
+            $sum1 = DB::table('danhgias')
+                ->where('user_id', $userId)
+                ->whereIn('phim_id', $sharedMovies)
+                ->sum('sao');
+
+            $sum2 = DB::table('danhgias')
+                ->where('user_id', $otherUser)
+                ->whereIn('phim_id', $sharedMovies)
+                ->sum('sao');
+
+            // Tính độ tương đồng dựa trên tổng điểm đánh giá của các bộ phim chung
+            $similarity = $sum1 * $sum2 > 0 ? ($sum1 * $sum2) / sqrt(pow($sum1, 2) + pow($sum2, 2)) : 0;
+
+            // Lưu độ tương đồng vào mảng
+            $similarities[$otherUser] = $similarity;
+        }
+
+        // Sắp xếp mảng độ tương đồng theo thứ tự giảm dần
+        arsort($similarities);
+
+        // Tạo một mảng chứa các bộ phim được đề xuất
+        $recommendations = [];
+
+        // Lặp qua các người dùng có độ tương đồng cao nhất với người dùng hiện tại để tìm các bộ phim họ đã đánh giá
+        foreach ($similarities as $otherUser => $similarity) {
+            // Bỏ qua các người dùng có độ tương đồng bằng 0
+            if ($similarity == 0) {
+                continue;
+            }
+
+            // Tìm các bộ phim được được đánh giá bởi người dùng này và chưa được người dùng hiện tại đánh giá
+            $unratedMovies = DB::table('danhgias')
+                ->where('user_id', $otherUser)
+                ->whereNotIn('phim_id', function ($query) use ($userId) {
+                    $query->select('phim_id')
+                        ->from('danhgias')
+                        ->where('user_id', $userId);
+                })
+                ->pluck('phim_id');
+            // Lặp qua các bộ phim chưa được người dùng hiện tại đánh giá và tính điểm đề xuất dựa trên độ tương đồng và điểm đánh giá của người dùng khác
+            foreach ($unratedMovies as $movie) {
+                $weightedSum = 0;
+                $similaritySum = 0;
+
+                foreach ($otherUsers as $u) {
+                    // Kiểm tra xem người dùng này đã đánh giá bộ phim này chưa
+                    $rating = DB::table('danhgias')
+                        ->where('user_id', $u)
+                        ->where('phim_id', $movie)
+                        ->value('sao');
+
+                    // Nếu người dùng đã đánh giá bộ phim này, tính điểm đề xuất dựa trên độ tương đồng và điểm đánh giá của người dùng này
+                    if ($rating !== null) {
+                        $weightedSum += $similarities[$u] * $rating;
+                        $similaritySum += $similarities[$u];
+                    }
+                }
+
+                // Nếu có ít nhất một người dùng khác đã đánh giá bộ phim này, tính điểm đề xuất và lưu vào mảng
+                if ($similaritySum > 0) {
+                    $recommendations[$movie] = $weightedSum / $similaritySum;
+                }
+            }
+        }
+
+        // Sắp xếp mảng đề xuất theo thứ tự giảm dần của điểm đề xuất
+        arsort($recommendations);
+
+        // Lấy ra 10 bộ phim có điểm đề xuất cao nhất và trả về cho người dùng
+        $phimdexuat_id = array_slice(array_keys($recommendations), 0, 10);
+        $phimdexuat_sao = [];
+
+        if (!empty($phimdexuat_id)) {
+            $phimdexuat_sao = Phim::whereIn('id', $phimdexuat_id)
+                ->orderByRaw("FIELD(id, " . implode(',', $phimdexuat_id) . ")")
+                ->whereNotIn('id', function ($query) {
+                    $query->select('phim_id')
+                        ->from('lichsuphims')
+                        ->where('user_id', Auth::user()->id);
+                })
+                ->get();
+
+            foreach ($phimdexuat_sao as $key => $item) {
+                $item->tbdanhgia = number_format($item->tbdanhgia(), 1);
+            }
+        }
+
+        // Tạo ma trận ban đầu thay các giá trị trống bằng dấu ?
+        $initialMatrix = [];
+        $movies = DB::table('phims')->pluck('id');
+        $otherUsers1 = DB::table('danhgias')
+            // ->where('user_id', '<>', $userId)
+            ->pluck('user_id')
+            ->unique();
+        foreach ($otherUsers1 as $otherUser) {
+            $ratings = DB::table('danhgias')
+                ->where('user_id', $otherUser)
+                ->whereIn('phim_id', $movies)
+                ->pluck('sao', 'phim_id')
+                ->toArray();
+
+            $row = [];
+
+            foreach ($movies as $movie) {
+                $rating = isset($ratings[$movie]) ? $ratings[$movie] : '?';
+                $row[$movie] = $rating;
+            }
+
+            $initialMatrix[$otherUser] = $row;
+        }
+
+        // Tạo ma trận chuẩn hóa dữ liệu thay các giá trị trống bằng số 0
+        $normalizedMatrix = [];
+
+        foreach ($initialMatrix as $user => $ratings) {
+            $row = [];
+
+            foreach ($ratings as $movie => $rating) {
+                $value = $rating == '?' ? 0 : $rating;
+                $row[$movie] = $value;
+            }
+
+            $normalizedMatrix[$user] = $row;
+        }
+        // Sao chép ma trận chuẩn hóa dữ liệu ban đầu
+        $normalizedMatrixModified = $normalizedMatrix;
+
+foreach ($initialMatrix as $user => $ratings) {
+    $sum = 0;
+    $count = 0;
+
+    foreach ($ratings as $movie => $rating) {
+        if ($rating !== '?') {
+            $sum += $rating;
+            $count++;
+        }
+    }
+
+    $averageRating = $count > 0 ? $sum / $count : 0;
+
+    foreach ($ratings as $movie => $rating) {
+        $value = $rating === '?' ? 0 : $rating - $averageRating;
+        $normalizedMatrixModified[$user][$movie] = $value;
+    }
+}
+
+        // Tạo ma trận tính độ tương đồng
+        $similarityMatrixModified = [];
+
+foreach ($normalizedMatrixModified as $user1 => $ratings1) {
+    $row = [];
+
+    foreach ($normalizedMatrixModified as $user2 => $ratings2) {
+        if ($user1 == $user2) {
+            $similarity = 1; // Độ tương đồng của một người với chính họ là 1
+        } else {
+            $numerator = 0;
+            $denominator1 = 0;
+            $denominator2 = 0;
+
+            foreach ($ratings1 as $movie => $rating1) {
+                if (isset($ratings2[$movie])) {
+                    $rating2 = $ratings2[$movie];
+                    $numerator += $rating1 * $rating2;
+                    $denominator1 += pow($rating1, 2);
+                    $denominator2 += pow($rating2, 2);
+                }
+            }
+
+            $denominator = sqrt($denominator1) * sqrt($denominator2);
+            $similarity = $denominator > 0 ? $numerator / $denominator : 0;
+        }
+
+        $row[$user2] = $similarity;
+    }
+
+    $similarityMatrixModified[$user1] = $row;
+}
+
+        // Tạo ma trận đề xuất
+        $recommendationMatrix = [];
+
+        foreach ($normalizedMatrixModified as $user => $ratings) {
+            $row = [];
+
+            foreach ($movies as $movie) {
+                if (isset($ratings[$movie]) && $ratings[$movie] == 0) {
+                    $weightedSum = 0;
+                    $similaritySum = 0;
+
+                    foreach ($normalizedMatrixModified as $otherUser => $otherRatings) {
+                        if ($user != $otherUser && isset($otherRatings[$movie]) && $otherRatings[$movie] != 0) {
+                            $similarity = $similarityMatrixModified[$user][$otherUser];
+                            $rating = $otherRatings[$movie];
+
+                            $weightedSum += $similarity * $rating;
+                            $similaritySum += $similarity;
+                        }
+                    }
+
+                    $predictedRating = $similaritySum > 0 ? $weightedSum / $similaritySum : 0;
+                    $row[$movie] = $predictedRating;
+                } else {
+                    $row[$movie] = $ratings[$movie];
+                }
+            }
+
+            $recommendationMatrix[$user] = $row;
+        }
+        // Tạo ma trận đề xuất
+        $recommendationMatrix1 = [];
+
+        foreach ($normalizedMatrix as $user => $ratings) {
+            $row = [];
+
+            foreach ($movies as $movie) {
+                if (isset($ratings[$movie]) && $ratings[$movie] == 0) {
+                    $weightedSum = 0;
+                    $similaritySum = 0;
+
+                    foreach ($normalizedMatrix as $otherUser => $otherRatings) {
+                        if ($user != $otherUser && isset($otherRatings[$movie]) && $otherRatings[$movie] != 0) {
+                            $similarity = $similarityMatrixModified[$user][$otherUser];
+                            $rating = $otherRatings[$movie];
+
+                            $weightedSum += $similarity * $rating;
+                            $similaritySum += $similarity;
+                        }
+                    }
+
+                    $predictedRating = $similaritySum > 0 ? $weightedSum / $similaritySum : 0;
+                    $row[$movie] = $predictedRating;
+                } else {
+                    $row[$movie] = $ratings[$movie];
+                }
+            }
+
+            $recommendationMatrix1[$user] = $row;
+        }
+        return view('user.layout_user.thuattoan', [
+            'users' => $users,
+            'movies' => $movies,
+            'initialMatrix' => $initialMatrix,
+            'normalizedMatrix' => $normalizedMatrixModified,
+            'similarityMatrix' => $similarityMatrixModified,
+            'recommendationMatrix' => $recommendationMatrix,
+            'phimdexuat_sao'=>$phimdexuat_sao,
+            'recommendationMatrix1' => $recommendationMatrix1,
+            
+        ]);
+    }
 }
